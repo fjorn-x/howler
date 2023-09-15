@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
+import HowlCard from "./HowlCard";
 
 const validationSchema = Yup.object().shape({
   content: Yup.string().required("Woof text is required"),
@@ -92,7 +93,11 @@ const HomeFeed = () => {
           </div>
         </div>
       </section>
-      <section></section>
+      <section>
+        {[1, 1, 1, 1, 1].map((item) => (
+          <HowlCard />
+        ))}
+      </section>
     </div>
   );
 };

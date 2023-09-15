@@ -1,7 +1,7 @@
 import React from "react";
 import {navigation} from "./NavigationMenu";
 import {useNavigate} from "react-router-dom";
-import {Avatar, Button, Menu, MenuItem} from "@mui/material";
+import {Avatar, Button, IconButton, Menu, MenuItem} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const image = {
@@ -61,7 +61,7 @@ const Navigation = () => {
           <div>
             <span>Hamza Shaikh</span>
             <span className="opacity-70">@hamzashaikh</span>
-            <Button
+            <IconButton
               id="basic-button"
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
@@ -69,7 +69,7 @@ const Navigation = () => {
               onClick={handleClick}
             >
               <MoreHorizIcon />
-            </Button>
+            </IconButton>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
