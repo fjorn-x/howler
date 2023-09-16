@@ -9,6 +9,7 @@ const image = {
   height: "50px",
 };
 const Navigation = () => {
+  const username = "Hamza Shaikh";
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -23,25 +24,21 @@ const Navigation = () => {
   };
   const navigate = useNavigate();
   return (
-    <div className="h-screen sticky top-0">
+    <div className="flex flex-col justify-between h-screen sticky top-0">
       <div>
-        <div className="py-5">
+        <div className="pt-2 pb-5">
           <img src="images/icon.png" alt="" style={image} />
         </div>
         <div className="space-y-6">
           {navigation.map((item) => (
             <div
               className="cursor-pointer flex space-x-3 items-center"
-              onClick={() =>
-                item.title === "Profile" ? navigate(`/profile/${5}`) : navigate(item.path)
-              }
+              onClick={() => (item.title === "Profile" ? navigate(`/${5}`) : navigate(item.path))}
             >
               {item.icon}
               <p className="text-xl">{item.title}</p>
             </div>
           ))}
-        </div>
-        <div className="py-10">
           <Button
             sx={{
               width: "100%",
@@ -55,33 +52,33 @@ const Navigation = () => {
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-5 mb-5">
         <div className="flex items-center space-x-3">
-          <Avatar alt="username" src="images/icon.png" />
+          <Avatar alt={{username}} src="/images/profile.jpeg" />
           <div>
             <span>Hamza Shaikh</span>
             <span className="opacity-70">@hamzashaikh</span>
-            <IconButton
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
-            >
-              <MoreHorizIcon />
-            </IconButton>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
           </div>
+          <IconButton
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <MoreHorizIcon size="small" />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
         </div>
       </div>
     </div>

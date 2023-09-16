@@ -34,13 +34,13 @@ const HomeFeed = () => {
     setUploadingImage(true);
   };
   return (
-    <div className="space-y-5">
-      <section>
-        <h1 className="py-5 text-xl font-bold opacity-90">Home</h1>
+    <div className="border">
+      <section className="border">
+        <h1 className="px-3 py-5 text-xl font-bold opacity-90">Home</h1>
       </section>
-      <section className="pb-10">
+      <section className="p-3 border">
         <div className="flex space-x-5">
-          <Avatar alt="username" src="images/icon.png" />
+          <Avatar alt="username" src="images/profile.jpeg" />
           <div className="w-full">
             <form onSubmit={formik.handleSubmit}>
               <div>

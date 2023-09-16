@@ -12,7 +12,7 @@ export const navigation = [
   {
     title: "Home",
     icon: <HomeIcon />,
-    path: "/home",
+    path: "/",
   },
   {
     title: "Explore",
@@ -47,7 +47,7 @@ export const navigation = [
   {
     title: "Profile",
     icon: <AccountCircleIcon />,
-    path: "/profile",
+    path: "/:id",
   },
   {
     title: "More",
