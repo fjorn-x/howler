@@ -5,21 +5,23 @@ import HomeFeed from "../HomeFeed/HomeFeed";
 import Extra from "../Extra/Extra";
 import {Route, Routes} from "react-router-dom";
 import Profile from "../Profile/Profile";
+import PostDetails from "../PostDetails/PostDetails";
 
 const HomePage = () => {
   return (
     <div>
-      <Grid container className="px-5 lg:px-20 justify-between">
-        <Grid item xs={0} lg={2.5} className="pl-6 hidden lg:block w-full relative">
+      <Grid container className="px-5 xl:px-20 lg:px-15 justify-between overscroll-none">
+        <Grid item xs={0} lg={2.5} className="pl-6 hidden xl:block w-full relative">
           <Navigation />
         </Grid>
         <Grid item xs={12} lg={6} className="pr-3 hidden lg:block w-full relative">
           <Routes>
             <Route path="/" element={<HomeFeed />}></Route>
-            <Route path="/:id" element={<Profile />}></Route>
+            <Route path="/:userId" element={<Profile />}></Route>
+            <Route path="/:userId/post/:postId" element={<PostDetails />}></Route>
           </Routes>
         </Grid>
-        <Grid item xs={0} lg={3} className="hidden lg:block w-full relative">
+        <Grid item xs={0} lg={3} className="hidden xl:block w-full relative">
           <Extra />
         </Grid>
       </Grid>

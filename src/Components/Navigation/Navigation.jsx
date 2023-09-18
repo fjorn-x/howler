@@ -27,7 +27,7 @@ const Navigation = () => {
     <div className="flex flex-col justify-between h-screen sticky top-0">
       <div>
         <div className="pt-2 pb-5">
-          <img src="images/icon.png" alt="" style={image} />
+          <img src="/images/icon.png" alt="" style={image} />
         </div>
         <div className="space-y-6">
           {navigation.map((item) => (

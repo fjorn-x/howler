@@ -34,11 +34,11 @@ const HomeFeed = () => {
     setUploadingImage(true);
   };
   return (
-    <div className="border">
-      <section className="border">
-        <h1 className="px-3 py-5 text-xl font-bold opacity-90">Home</h1>
+    <div className="border-x overscroll-none">
+      <section className="pb-4 z-50 flex items-center sticky top-0 bg-opacity-95 bg-white">
+        <h1 className="px-4 py-2 text-xl font-bold  opacity-90">Home</h1>
       </section>
-      <section className="p-3 border">
+      <section className="p-3 border-y">
         <div className="flex space-x-5">
           <Avatar alt="username" src="images/profile.jpeg" />
           <div className="w-full">
@@ -95,7 +95,9 @@ const HomeFeed = () => {
       </section>
       <section>
         {[1, 1, 1, 1, 1].map((item) => (
-          <HowlCard />
+          <>
+            <HowlCard />
+          </>
         ))}
       </section>
     </div>

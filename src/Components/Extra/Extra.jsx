@@ -15,7 +15,7 @@ const Extra = () => {
         <div className="relative flex items-center">
           <input
             type="text"
-            className="py-1 rounded-full text-gray-500 w-full pl-10"
+            className="py-1 rounded-full text-gray-500 w-full pl-10 border  "
             placeholder="Search"
           />
           <div className="absolute left-0 pl-2">

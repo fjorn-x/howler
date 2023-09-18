@@ -23,26 +23,31 @@ const HowlCard = () => {
   const handleLikeTweet = () => {
     console.log("like tweet");
   };
+
   return (
-    <div className="border p-3 pr-3">
+    <div className="border-b-2 p-3 pr-3">
       <div className="flex space-x-5">
         <Avatar
           className="cursor-pointer"
           alt="username"
-          src="images/profile.jpeg"
+          src="/images/profile.jpeg"
           onClick={() => navigate(`/${5}`)}
         />
         <div className="w-full">
           <div className="flex justify-between items-start">
-            <div className="flex cursor-pointer  space-x-1" onClick={() => navigate(`/${5}`)}>
-              <span className="font-semibold">Hamza Shaikh</span>
+            <div className="flex cursor-pointer space-x-1" onClick={() => navigate(`/${5}`)}>
+              <span className="font-semibold hover:underline">Hamza Shaikh</span>
               <Verified className="text-[#b91c1c]" />
-              <span className="text-gray-600">@hamzashaikh &#183; 2m</span>
+
+              <span className="text-gray-600 ">
+                {true ? window.scrollTo(0, 0) : ""}@hamzashaikh
+              </span>
+              <span className="text-gray-600">&#183; 2m</span>
             </div>
             <MoreButton />
           </div>
           <div>
-            <div className="cursor-pointer" onClick={() => navigate(`/${5}`)}>
+            <div className="cursor-pointer" onClick={() => navigate(`/${5}/post/${1}`)}>
               <p className="mb-2 p-0 w-full">
                 AMD GPU+CPU GIVEAWAY!! @AMD created 500 Limited Edition @StarfieldGame Radeon™ RX
                 7900 XTX and Ryzen™ 7 7800X3D processor gift packs and partnered with me to give one
@@ -50,7 +55,7 @@ const HowlCard = () => {
                 ✅Tag 2 friends Winner will be announced Sept. 20!
               </p>
               <img
-                src="images/profile.jpeg"
+                src="/images/profile.jpeg"
                 alt=""
                 className="w-full border border-gray-400 p-5 rounded-md"
               />
