@@ -33,9 +33,7 @@ const HomeFeed = () => {
     setSelectedImage(imgUrl);
     setUploadingImage(true);
   };
-  const handleTextareaResize = (e) => {
-    e.target.rows = Math.ceil(e.target.scrollHeight / 20);
-  };
+
   return (
     <div className="border-x overscroll-none">
       <section className="pb-4 z-50 flex items-center sticky top-0 bg-opacity-95 bg-white">
@@ -53,9 +51,7 @@ const HomeFeed = () => {
                   placeholder="Woof Woof Woof"
                   className="border-none outline-none text-xl bg-transparent w-full"
                   {...formik.getFieldProps("content")}
-                  {...(formik.errors.content && formik.touched.content && (
-                    <span className="text-red-500">{formik.errors.content}</span>
-                  ))}
+                  {...(formik.errors.content && formik.touched.content && <span className="text-red-500">{formik.errors.content}</span>)}
                 />
               </div>
 
@@ -63,12 +59,7 @@ const HomeFeed = () => {
                 <div className="flex space-x-5 items-center">
                   <label className="flex item-center space-x-2 cursor-pointer rouded-md">
                     <ImageIcon className="text-[#b91c1c]" />
-                    <input
-                      type="file"
-                      name="imageFile"
-                      className="hidden"
-                      onChange={handleSelectImage}
-                    />
+                    <input type="file" name="imageFile" className="hidden" onChange={handleSelectImage} />
                   </label>
                   <FmdGoodIcon className="text-[#b91c1c]" />
                   <TagFacesIcon className="text-[#b91c1c]" />
@@ -82,9 +73,14 @@ const HomeFeed = () => {
                       py: "8px",
                       px: "20px",
                       bgcolor: "#b91c1c",
+                      "&:hover": {
+                        backgroundColor: "black",
+                      },
                     }}
                     variant="contained"
                     type="submit"
+                    disabled={!formik.isValid}
+                    className="hover:bg-black "
                   >
                     HOWL
                   </Button>

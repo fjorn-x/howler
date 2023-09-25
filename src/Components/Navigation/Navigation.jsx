@@ -44,6 +44,9 @@ const Navigation = () => {
               borderRadius: "29px",
               py: "15px",
               bgcolor: "#b91c1c",
+              "&:hover": {
+                backgroundColor: "black",
+              },
             }}
             variant="contained"
           >
