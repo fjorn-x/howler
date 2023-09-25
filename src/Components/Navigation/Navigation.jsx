@@ -9,7 +9,6 @@ const image = {
   height: "50px",
 };
 const Navigation = () => {
-  const username = "Hamza Shaikh";
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -54,7 +53,7 @@ const Navigation = () => {
       </div>
       <div className="flex items-center justify-between mt-5 mb-5">
         <div className="flex items-center space-x-3">
-          <Avatar alt={{username}} src="/images/profile.jpeg" />
+          <Avatar alt="Hamza Shaikh" src="/images/profile.jpeg" />
           <div>
             <span>Hamza Shaikh</span>
             <span className="opacity-70">@hamzashaikh</span>

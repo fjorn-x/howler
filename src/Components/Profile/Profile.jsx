@@ -14,9 +14,7 @@ const Profile = () => {
   const [value, setValue] = React.useState("1");
   const navigate = useNavigate();
   const handleBack = () => navigate("/");
-  const handleOpenProfileModal = () => {
-    console.log("Open Profile Modal");
-  };
+
   const handleFollowUser = () => {
     console.log("follow user");
   };
@@ -50,14 +48,7 @@ const Profile = () => {
             sx={{width: "9rem", height: "9rem", border: `4px solid ${"white"}`}}
           />
           {true ? (
-            <Button
-              variant="outlined"
-              sx={{borderRadius: "20px"}}
-              onClick={handleOpenProfileModal}
-              className="mr-2"
-            >
-              Edit Profile
-            </Button>
+            <ProfileModal />
           ) : (
             <Button variant="outlined" sx={{borderRadius: "20px"}} onClick={handleFollowUser}>
               {true ? "Follow" : "Unfollow"}
@@ -126,9 +117,6 @@ const Profile = () => {
             <TabPanel value="4">Likes</TabPanel>
           </TabContext>
         </Box>
-      </section>
-      <section>
-        <ProfileModal />
       </section>
     </div>
   );

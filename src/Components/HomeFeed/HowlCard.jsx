@@ -4,18 +4,18 @@ import {Avatar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import Verified from "@mui/icons-material/Verified";
 
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import MoreButton from "../Extra/MoreButton";
+import ReplyModal from "./ReplyModal";
 
 const HowlCard = () => {
   const navigate = useNavigate();
 
-  const handleOpenReplyModal = () => {
-    console.log("open reply modal");
+  const handleCopyLink = (e) => {
+    console.log(e.view.location.href);
   };
   const handleCreateRetweet = () => {
     console.log("create retweet");
@@ -46,7 +46,7 @@ const HowlCard = () => {
             </div>
             <MoreButton />
           </div>
-          <div>
+          <>
             <div className="cursor-pointer" onClick={() => navigate(`/${5}/post/${1}`)}>
               <p className="mb-2 p-0 w-full">
                 AMD GPU+CPU GIVEAWAY!! @AMD created 500 Limited Edition @StarfieldGame Radeon™ RX
@@ -60,18 +60,14 @@ const HowlCard = () => {
                 className="w-full border border-gray-400 p-5 rounded-md"
               />
             </div>
-          </div>
+          </>
           <div className="py-2 flex flex-wrap justify-between items-center">
-            <div className="space-x-3 flex items-center text-gray-600">
-              <ChatBubbleOutlineOutlinedIcon
-                className="cursor-pointer"
-                onClick={handleOpenReplyModal}
-                fontSize="small"
-              />
+            <div className="flex items-center text-gray-600">
+              <ReplyModal />
               <p>43</p>
             </div>
             <div
-              className={`${true ? "text-pink-600" : "text-gray-600"} space-x-3 flex items-center`}
+              className={`${false ? "text-pink-600" : "text-gray-600"} space-x-3 flex items-center`}
             >
               <RepeatOutlinedIcon
                 className="cursor-pointer"
@@ -99,17 +95,13 @@ const HowlCard = () => {
               <p>54</p>
             </div>
             <div className="space-x-3 flex items-center text-gray-600">
-              <BarChartOutlinedIcon
-                className="cursor-pointer"
-                onClick={handleOpenReplyModal}
-                fontSize="small"
-              />
+              <BarChartOutlinedIcon className="cursor-pointer" fontSize="small" />
               <p>430</p>
             </div>
             <div className="space-x-3 flex items-center text-gray-600 mr-2">
               <FileUploadOutlinedIcon
                 className="cursor-pointer "
-                onClick={handleOpenReplyModal}
+                onClick={handleCopyLink}
                 fontSize="small"
               />
             </div>

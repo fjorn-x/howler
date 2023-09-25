@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Avatar, Button} from "@mui/material";
+import {Avatar, Button, TextField} from "@mui/material";
 import {useFormik} from "formik";
 import React, {useState} from "react";
 import * as Yup from "yup";
@@ -33,6 +33,9 @@ const HomeFeed = () => {
     setSelectedImage(imgUrl);
     setUploadingImage(true);
   };
+  const handleTextareaResize = (e) => {
+    e.target.rows = Math.ceil(e.target.scrollHeight / 20);
+  };
   return (
     <div className="border-x overscroll-none">
       <section className="pb-4 z-50 flex items-center sticky top-0 bg-opacity-95 bg-white">
@@ -55,9 +58,7 @@ const HomeFeed = () => {
                   ))}
                 />
               </div>
-              {/* <div>
-                  <img src="" alt="" />
-              </div> */}
+
               <div className="flex justify-between items-center mt-5">
                 <div className="flex space-x-5 items-center">
                   <label className="flex item-center space-x-2 cursor-pointer rouded-md">

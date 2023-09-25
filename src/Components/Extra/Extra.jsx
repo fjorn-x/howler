@@ -1,9 +1,9 @@
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
-import {Button} from "@mui/material";
 
 import MoreButton from "./MoreButton";
+import SubscriptionModal from "./SubsciptionModal";
 
 const Extra = () => {
   const handleChangeTheme = () => {
@@ -33,12 +33,13 @@ const Extra = () => {
         <h1 className="my-2 font-bold text-sm">
           Subscribe to unlock new features and if eligible, receive a share of ads revenue.
         </h1>
-        <Button
+        {/* <Button
           variant="contained"
           sx={{padding: "10px", paddingX: "20px", borderRadius: "25px", bgcolor: "#b91c1c"}}
         >
           Subscribe
-        </Button>
+        </Button> */}
+        <SubscriptionModal />
       </section>
       <section className="mt-7 space-y-4 pl-2">
         <h1 className="font-bold text-xl ">What's happening</h1>
