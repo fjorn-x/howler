@@ -10,7 +10,7 @@ import PostDetails from "../PostDetails/PostDetails";
 const HomePage = () => {
   return (
     <div>
-      <Grid container className="px-5 xl:px-20 lg:px-15 justify-between overscroll-none">
+      <Grid container className="px-5 md:px-20 justify-between overscroll-none">
         <Grid item xs={0} lg={2.5} className="pl-6 hidden xl:block w-full relative">
           <Navigation />
         </Grid>

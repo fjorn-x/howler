@@ -23,26 +23,31 @@ const Navigation = () => {
   };
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col justify-between h-screen sticky top-0">
+    <div className=" flex flex-col justify-between h-screen sticky top-0">
       <div>
         <div className="pt-2 pb-5">
           <img src="/images/icon.png" alt="" style={image} />
         </div>
-        <div className="space-y-6">
+        <div className="space-y-2">
           {navigation.map((item) => (
             <div
-              className="cursor-pointer flex space-x-3 items-center"
+              className="hover:bg-gray-200 cursor-pointer flex space-x-3 items-center rounded-full p-3 "
               onClick={() => (item.title === "Profile" ? navigate(`/${5}`) : navigate(item.path))}
             >
               {item.icon}
               <p className="text-xl">{item.title}</p>
             </div>
           ))}
+        </div>
+
+          <div className="mt-3">
           <Button
             sx={{
-              width: "100%",
+             
+              width: "90%",
               borderRadius: "29px",
               py: "15px",
+              fontWeight:"bold",
               bgcolor: "#b91c1c",
               "&:hover": {
                 backgroundColor: "black",
@@ -52,14 +57,14 @@ const Navigation = () => {
           >
             HOWL
           </Button>
-        </div>
+          </div>
       </div>
-      <div className="flex items-center justify-between mt-5 mb-5">
-        <div className="flex items-center space-x-3">
+      <div className=" mt-5 mb-5">
+        <div className="flex items-center justify-between space-x-3 hover:border rounded-full p-3">
           <Avatar alt="Hamza Shaikh" src="/images/profile.jpeg" />
           <div>
             <span>Hamza Shaikh</span>
-            <span className="opacity-70">@hamzashaikh</span>
+            <p className="opacity-70">@hamzashaikh</p>
           </div>
           <IconButton
             id="basic-button"
