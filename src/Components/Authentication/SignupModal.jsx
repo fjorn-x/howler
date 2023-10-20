@@ -6,6 +6,8 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../State/Auth/Action";
 
 const style = {
   position: "absolute",
@@ -43,6 +45,8 @@ const months = [
 const SignupModal = () => {
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+
+  const dispatch=useDispatch()
 
   // const navigate = useNavigate();
 
@@ -98,6 +102,7 @@ const SignupModal = () => {
       // const dateOfBirth = `${year}-${month}-${day}`;
       // values.dateOfBirth = dateOfBirth;
       // const date=new Date().setFullYear(year,month,day);
+      dispatch(registerUser(values));
       console.log("Signup values : ", values);
     },
   });
