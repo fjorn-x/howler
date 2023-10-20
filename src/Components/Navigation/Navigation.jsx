@@ -40,14 +40,13 @@ const Navigation = () => {
           ))}
         </div>
 
-          <div className="mt-3">
+        <div className="mt-3">
           <Button
             sx={{
-             
               width: "90%",
               borderRadius: "29px",
               py: "15px",
-              fontWeight:"bold",
+              fontWeight: "bold",
               bgcolor: "#b91c1c",
               "&:hover": {
                 backgroundColor: "black",
@@ -57,10 +56,10 @@ const Navigation = () => {
           >
             HOWL
           </Button>
-          </div>
+        </div>
       </div>
       <div className=" mt-5 mb-5">
-        <div className="flex items-center justify-between space-x-3 hover:border rounded-full p-3">
+        <div className="flex items-center justify-between space-x-3 hover:bg-gray-200 rounded-full p-3">
           <Avatar alt="Hamza Shaikh" src="/images/profile.jpeg" />
           <div>
             <span>Hamza Shaikh</span>
