@@ -5,6 +5,7 @@ import {
   LOGIN_USER_FAILURE,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
+  LOGOUT,
   REGISTER_USER_FAILURE,
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
@@ -24,6 +25,8 @@ export const authReducer = (state = initialState, action) => {
     case GET_USER_PROFILE_REQUEST:
       return {...state, loading: true, error: null};
     case LOGIN_USER_SUCCESS:
+      return {...state, loading: false, error: null, jwt: action.payload};
+
     case REGISTER_USER_SUCCESS:
       return {...state, loading: false, error: null, jwt: action.payload};
     case GET_USER_PROFILE_SUCCESS:
@@ -32,6 +35,8 @@ export const authReducer = (state = initialState, action) => {
     case REGISTER_USER_FAILURE:
     case GET_USER_PROFILE_FAILURE:
       return {...state, loading: false, error: action.payload};
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }

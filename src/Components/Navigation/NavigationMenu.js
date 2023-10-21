@@ -47,7 +47,7 @@ export const navigation = [
   {
     title: "Profile",
     icon: <AccountCircleIcon />,
-    path: "/:userId",
+    path: "/profile/:userId",
   },
   {
     title: "More",

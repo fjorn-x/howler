@@ -6,8 +6,8 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useNavigate} from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../State/Auth/Action";
+import {useDispatch} from "react-redux";
+import {registerUser} from "../../State/Auth/Action";
 
 const style = {
   position: "absolute",
@@ -46,17 +46,12 @@ const SignupModal = () => {
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const dispatch=useDispatch()
-
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
-    const path = "/signup";
-    // navigate(path);
     setOpen(true);
   };
   const handleClose = () => {
-    // navigate(-1);
     setOpen(false);
   };
 
@@ -74,7 +69,9 @@ const SignupModal = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string(),
+    fullName: Yup.string()
+      .required("Full Name is Required")
+      .matches(/^\w+\s\w+$/, "Please Enter Full Name"),
     email: Yup.string().email("Invalid email").required("Email is Required"),
     password: Yup.string()
       .required("Password is Required")
@@ -83,6 +80,11 @@ const SignupModal = () => {
       .matches(/(?=.*[A-Z])\w+/, "Password should contain at least one uppercase")
       .matches(/\d/, "Password should contain at least one number")
       .matches(/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/, "Password should contain at least one special character"),
+    dateOfBirth: Yup.object().shape({
+      day: Yup.number().required(),
+      month: Yup.string().required(),
+      year: Yup.number().required(),
+    }),
   });
 
   const formik = useFormik({

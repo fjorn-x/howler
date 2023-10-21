@@ -3,13 +3,19 @@ import {navigation} from "./NavigationMenu";
 import {useNavigate} from "react-router-dom";
 import {Avatar, Button, IconButton, Menu, MenuItem} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutUser} from "../../State/Auth/Action";
 
 const image = {
   width: "50px",
   height: "50px",
 };
 const Navigation = () => {
+  const {auth} = useSelector((store) => store);
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,7 +24,9 @@ const Navigation = () => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
+    dispatch(logoutUser());
     console.log("logout");
+
     handleClose();
   };
   const navigate = useNavigate();
@@ -32,7 +40,7 @@ const Navigation = () => {
           {navigation.map((item) => (
             <div
               className="hover:bg-gray-200 cursor-pointer flex space-x-3 items-center rounded-full p-3 "
-              onClick={() => (item.title === "Profile" ? navigate(`/${5}`) : navigate(item.path))}
+              onClick={() => (item.title === "Profile" ? navigate(`/profile/${5}`) : navigate(item.path))}
             >
               {item.icon}
               <p className="text-xl">{item.title}</p>
@@ -62,8 +70,8 @@ const Navigation = () => {
         <div className="flex items-center justify-between space-x-3 hover:bg-gray-200 rounded-full p-3">
           <Avatar alt="Hamza Shaikh" src="/images/profile.jpeg" />
           <div>
-            <span>Hamza Shaikh</span>
-            <p className="opacity-70">@hamzashaikh</p>
+            <span>{auth.user?.fullName}</span>
+            <p className="opacity-70">@{auth.user?.fullName.toLowerCase().replace(/\s/g, "_")}</p>
           </div>
           <IconButton
             id="basic-button"

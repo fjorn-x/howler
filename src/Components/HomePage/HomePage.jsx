@@ -17,7 +17,7 @@ const HomePage = () => {
         <Grid item xs={12} lg={6} className="pr-3 hidden lg:block w-full relative">
           <Routes>
             <Route path="/" element={<HomeFeed />}></Route>
-            <Route path="/:userId" element={<Profile />}></Route>
+            <Route path="/profile/:userId" element={<Profile />}></Route>
             <Route path="/:userId/post/:postId" element={<PostDetails />}></Route>
           </Routes>
         </Grid>
