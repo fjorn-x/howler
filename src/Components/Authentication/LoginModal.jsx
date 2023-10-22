@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {GoogleLogin} from "@react-oauth/google";
 import {useDispatch} from "react-redux";
-import {loginUser} from "../../State/Auth/AuthActions";
+import {loginUser} from "../../State/Auth/AuthSlice";
 
 const style = {
   position: "absolute",

@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 
 import {useDispatch} from "react-redux";
-import {registerUser} from "../../State/Auth/AuthActions";
+import {registerUser} from "../../State/Auth/AuthSlice";
 
 const style = {
   position: "absolute",
