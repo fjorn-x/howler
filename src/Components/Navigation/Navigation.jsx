@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Avatar, Button, IconButton, Menu, MenuItem} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutUser} from "../../State/Auth/Action";
+import {logoutUser} from "../../State/Auth/AuthSlice";
 
 const image = {
   width: "50px",
