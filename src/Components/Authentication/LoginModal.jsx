@@ -5,7 +5,6 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {GoogleLogin} from "@react-oauth/google";
-import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../../State/Auth/Action";
 
@@ -27,13 +26,11 @@ const LoginModal = () => {
   const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+
   const handleOpen = () => {
-    // navigate("/login");
     setOpen(true);
   };
   const handleClose = () => {
-    // navigate(-1);
     setOpen(false);
   };
 
@@ -47,13 +44,7 @@ const LoginModal = () => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is Required"),
-    password: Yup.string()
-      .required("Password is Required")
-      .min(8, "Pasword must be 8 or more characters")
-      .matches(/(?=.*[a-z])\w+/, "Password should contain at least one lowercase")
-      .matches(/(?=.*[A-Z])\w+/, "Password should contain at least one uppercase")
-      .matches(/\d/, "Password should contain at least one number")
-      .matches(/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/, "Password should contain at least one special character"),
+    password: Yup.string().required("Password is Required"),
   });
 
   const formik = useFormik({
@@ -166,16 +157,11 @@ const LoginModal = () => {
               >
                 Sign In
               </Button>
-              <p className="mt-4">
-                Don't have an account?{" "}
-                <a href="/signup" className="text-red-700">
-                  Sign up
-                </a>
-              </p>
             </div>
           </form>
         </Box>
       </Modal>
+      <React.Fragment></React.Fragment>
     </div>
   );
 };

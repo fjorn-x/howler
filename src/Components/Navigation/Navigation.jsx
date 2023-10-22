@@ -13,6 +13,7 @@ const image = {
 const Navigation = () => {
   const {auth} = useSelector((store) => store);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -25,11 +26,9 @@ const Navigation = () => {
   };
   const handleLogout = () => {
     dispatch(logoutUser());
-    console.log("logout");
-
+    navigate("/");
     handleClose();
   };
-  const navigate = useNavigate();
   return (
     <div className=" flex flex-col justify-between h-screen sticky top-0">
       <div>

@@ -1,12 +1,10 @@
 import React from "react";
-import {Route, Routes, useLocation} from "react-router-dom";
-import {Button, Divider, Grid} from "@mui/material";
+import {Divider, Grid} from "@mui/material";
 import {GoogleLogin} from "@react-oauth/google";
 import LoginModal from "./LoginModal";
 import SignupModal from "./SignupModal";
 
 const Authentication = () => {
-  const location = useLocation();
   return (
     <div>
       <Grid className="overscroll-none" container>
@@ -49,11 +47,6 @@ const Authentication = () => {
           </div>
         </Grid>
       </Grid>
-
-      {/* <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-      </Routes> */}
     </div>
   );
 };

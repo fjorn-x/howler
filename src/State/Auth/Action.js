@@ -13,7 +13,7 @@ import {
 export const loginUser = (loginData) => async (dispatch) => {
   try {
     const {data} = await axios.post(`${API_BASE_URL}/auth/login`, loginData);
-    console.log(`logged in User : ${data}`);
+
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
@@ -27,7 +27,6 @@ export const loginUser = (loginData) => async (dispatch) => {
 export const registerUser = (registerData) => async (dispatch) => {
   try {
     const {data} = await axios.post(`${API_BASE_URL}/auth/signup`, registerData);
-    console.log(`signed up User : ${data}`);
 
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
@@ -41,7 +40,6 @@ export const registerUser = (registerData) => async (dispatch) => {
 
 export const getUserProfile = (jwt) => async (dispatch) => {
   try {
-    console.log(jwt);
     const {data} = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {Authorization: `Bearer ${jwt}`},
     });

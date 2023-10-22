@@ -1,11 +1,10 @@
 import React from "react";
 import {Box, Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Modal, Select, TextField} from "@mui/material";
-
 import CloseIcon from "@mui/icons-material/Close";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useNavigate} from "react-router-dom";
+
 import {useDispatch} from "react-redux";
 import {registerUser} from "../../State/Auth/Action";
 
@@ -128,6 +127,7 @@ const SignupModal = () => {
       >
         Create Account
       </Button>
+
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
           <IconButton onClick={handleClose} aria-label="delete" size="small" sx={{marginLeft: "8px"}}>

@@ -1,9 +1,11 @@
 /* eslint-disable no-unused-vars */
-import {Avatar, Button, TextField} from "@mui/material";
+import {Avatar, Button, TextField, styled} from "@mui/material";
 import {useFormik} from "formik";
 import React, {useState} from "react";
 import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
+import {TextareaAutosize as BaseTextareaAutosize} from "@mui/base";
+
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import HowlCard from "./HowlCard";
@@ -34,6 +36,50 @@ const HomeFeed = () => {
     setUploadingImage(true);
   };
 
+  const blue = {
+    100: "#DAECFF",
+    200: "#b6daff",
+    400: "#3399FF",
+    500: "#007FFF",
+    600: "#0072E5",
+    900: "#003A75",
+  };
+
+  const grey = {
+    50: "#f6f8fa",
+    100: "#eaeef2",
+    200: "#d0d7de",
+    300: "#afb8c1",
+    400: "#8c959f",
+    500: "#6e7781",
+    600: "#57606a",
+    700: "#424a53",
+    800: "#32383f",
+    900: "#24292f",
+  };
+
+  const Textarea = styled(BaseTextareaAutosize)(
+    ({theme}) => `
+
+    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
+    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
+
+    &:hover {
+      border-color: ${blue[400]};
+    }
+
+    &:focus {
+      border-color: ${blue[400]};
+      border-bottom: 1px solid  ${blue[400]};
+    }
+
+    // firefox
+    &:focus-visible {
+      outline: 0;
+    }
+  `
+  );
+
   return (
     <div className="border-x overscroll-none">
       <section className="pb-4 z-50 flex items-center sticky top-0 bg-opacity-95 bg-white">
@@ -45,13 +91,12 @@ const HomeFeed = () => {
           <div className="w-full">
             <form onSubmit={formik.handleSubmit}>
               <div>
-                <input
-                  type="text"
-                  name="content"
+                <Textarea
+                  className="w-full resize-none text-base pb-5"
+                  aria-label="minimum height"
+                  minRows={1}
+                  maxRows={5}
                   placeholder="Woof Woof Woof"
-                  className="border-none outline-none text-xl bg-transparent w-full"
-                  {...formik.getFieldProps("content")}
-                  {...(formik.errors.content && formik.touched.content && <span className="text-red-500">{formik.errors.content}</span>)}
                 />
               </div>
 
@@ -70,6 +115,7 @@ const HomeFeed = () => {
                     sx={{
                       width: "100%",
                       borderRadius: "20px",
+
                       py: "8px",
                       px: "20px",
                       bgcolor: "#b91c1c",
@@ -79,7 +125,7 @@ const HomeFeed = () => {
                     }}
                     variant="contained"
                     type="submit"
-                    disabled={!formik.isValid}
+                    disabled={!formik.isValid || !formik.dirty}
                     className="hover:bg-black "
                   >
                     HOWL
