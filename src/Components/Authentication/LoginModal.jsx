@@ -1,9 +1,10 @@
 import {Box, Button, Divider, IconButton, InputAdornment, Modal, TextField} from "@mui/material";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+
 import {GoogleLogin} from "@react-oauth/google";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../../State/Auth/AuthSlice";

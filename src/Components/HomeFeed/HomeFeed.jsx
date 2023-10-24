@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {Avatar, Button, TextField, styled} from "@mui/material";
 import {useFormik} from "formik";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
 import {TextareaAutosize as BaseTextareaAutosize} from "@mui/base";
@@ -9,6 +10,24 @@ import {TextareaAutosize as BaseTextareaAutosize} from "@mui/base";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import HowlCard from "./HowlCard";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllHowls} from "../../State/Howl/HowlSlice";
+
+const NoBorderTextField = styled(TextField)({
+  ".css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root": {
+    padding: "0px 0px 16.5px 0px",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    padding: "0px 14px",
+    border: "none",
+  },
+  "& .Mui-focused": {
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderRadius: 0,
+      borderBottom: "1px solid #6b7280",
+    },
+  },
+});
 
 const validationSchema = Yup.object().shape({
   content: Yup.string().required("Woof text is required"),
@@ -17,6 +36,8 @@ const validationSchema = Yup.object().shape({
 const HomeFeed = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const dispatch = useDispatch();
+  const {howl} = useSelector((store) => store);
   const handleSubmit = (values) => {
     console.log("values", values);
   };
@@ -36,49 +57,9 @@ const HomeFeed = () => {
     setUploadingImage(true);
   };
 
-  const blue = {
-    100: "#DAECFF",
-    200: "#b6daff",
-    400: "#3399FF",
-    500: "#007FFF",
-    600: "#0072E5",
-    900: "#003A75",
-  };
-
-  const grey = {
-    50: "#f6f8fa",
-    100: "#eaeef2",
-    200: "#d0d7de",
-    300: "#afb8c1",
-    400: "#8c959f",
-    500: "#6e7781",
-    600: "#57606a",
-    700: "#424a53",
-    800: "#32383f",
-    900: "#24292f",
-  };
-
-  const Textarea = styled(BaseTextareaAutosize)(
-    ({theme}) => `
-
-    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-
-    &:hover {
-      border-color: ${blue[400]};
-    }
-
-    &:focus {
-      border-color: ${blue[400]};
-      border-bottom: 1px solid  ${blue[400]};
-    }
-
-    // firefox
-    &:focus-visible {
-      outline: 0;
-    }
-  `
-  );
+  useEffect(() => {
+    dispatch(getAllHowls());
+  }, [howl.like, howl.retweet]);
 
   return (
     <div className="border-x overscroll-none">
@@ -91,12 +72,24 @@ const HomeFeed = () => {
           <div className="w-full">
             <form onSubmit={formik.handleSubmit}>
               <div>
-                <Textarea
-                  className="w-full resize-none text-base pb-5"
-                  aria-label="minimum height"
+                <NoBorderTextField
+                  id="content"
+                  name="content"
+                  fullWidth
+                  inputProps={{
+                    style: {
+                      padding: 0,
+                    },
+                  }}
+                  placeholder="Woof Woof Woof"
+                  value={formik.values.content}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                  multiline
                   minRows={1}
                   maxRows={5}
-                  placeholder="Woof Woof Woof"
                 />
               </div>
 
@@ -137,9 +130,9 @@ const HomeFeed = () => {
         </div>
       </section>
       <section>
-        {[1, 1, 1, 1, 1].map((item) => (
+        {howl.howls?.map((item) => (
           <>
-            <HowlCard />
+            <HowlCard item={item} />
           </>
         ))}
       </section>

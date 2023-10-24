@@ -1,14 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import authReducer from "./Auth/AuthSlice";
+import howlReducer from "./Howl/HowlSlice";
 
-// const rootReducers = combineReducers({
-//   auth: authReducer,
-// });
-
-// export const store = legacy_createStore(rootReducers, applyMiddleware(thunk));
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    howl: howlReducer,
   },
 });
 export default store;

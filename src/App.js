@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {Route, Routes, useNavigate} from "react-router-dom";
 import "./App.css";
 import HomePage from "./Components/HomePage/HomePage";
@@ -16,7 +17,6 @@ function App() {
       dispatch(getUserProfile(jwt));
       navigate("/");
     }
-    // eslint-disable-next-line
   }, [auth.jwt]);
   return (
     <div className="">

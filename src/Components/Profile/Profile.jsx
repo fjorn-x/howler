@@ -9,11 +9,13 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import HowlCard from "../HomeFeed/HowlCard";
 import ProfileModal from "./ProfileModal";
+import {useSelector} from "react-redux";
 
 const Profile = () => {
   const [value, setValue] = React.useState("1");
   const navigate = useNavigate();
   const handleBack = () => navigate("/");
+  const {howl, auth} = useSelector((store) => store);
 
   const handleFollowUser = () => {
     console.log("follow user");
@@ -94,13 +96,7 @@ const Profile = () => {
         <Box sx={{width: "100%", typography: "body1"}}>
           <TabContext value={value}>
             <Box sx={{borderBottom: 1, borderColor: "divider"}}>
-              <TabList
-                onChange={handleChange}
-                aria-label="Tabs on Profile"
-                indicatorColor="primary"
-                centered
-                variant="fullWidth"
-              >
+              <TabList onChange={handleChange} aria-label="Tabs on Profile" indicatorColor="primary" centered variant="fullWidth">
                 <Tab label="Posts" value="1" />
                 <Tab label="Replies" value="2" />
                 <Tab label="Media" value="3" />
@@ -108,9 +104,11 @@ const Profile = () => {
               </TabList>
             </Box>
             <TabPanel value="1" className="no-padding">
-              {[1, 1, 1, 1].map((item) => (
-                <HowlCard />
-              ))}
+              {howl.howls
+                .filter((item) => item.user.id === auth.user.id)
+                .map((item) => (
+                  <HowlCard item={item} />
+                ))}
             </TabPanel>
             <TabPanel value="2">Replies</TabPanel>
             <TabPanel value="3">Media</TabPanel>
