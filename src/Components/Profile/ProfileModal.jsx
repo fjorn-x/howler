@@ -1,12 +1,16 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import {useFormik} from "formik";
-import {Avatar, IconButton, TextField} from "@mui/material";
+import {Avatar, CircularProgress, IconButton, TextField} from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../../State/Auth/AuthSlice";
+import {uploadToCloudinary} from "../../Utils/uploadToCloudinary";
 
 const style = {
   position: "absolute",
@@ -24,32 +28,56 @@ const style = {
 
 export default function ProfileModal() {
   const [open, setOpen] = React.useState(false);
-  const [, setUploading] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
+  const [uploadingBanner, setUploadingBanner] = React.useState(false);
+
+  const [selectedImage, setSelectedImage] = React.useState("");
+  const [selectedBanner, setSelectedBanner] = React.useState("");
+
+  const {auth} = useSelector((store) => store);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    console.log("edit profile modal", values);
+    dispatch(updateUser(values));
+    setSelectedImage("");
+    setSelectedBanner("");
+    setOpen(false);
   };
 
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      website: "",
-      location: "",
-      bio: "",
-      backgroundImage: "",
-      image: "",
+      fullName: auth?.user.fullName,
+      website: auth?.user.website,
+      location: auth?.user.location,
+      bio: auth?.user.bio,
+      bannerImage: auth?.user.bannerImage,
+      profileImage: auth?.user.profileImage,
+      profession: auth?.user.profession,
     },
     onSubmit: handleSubmit,
   });
 
-  const handleImageChange = (event) => {
-    setUploading(true);
-    const {name} = event.target;
-    const file = event.target.files[0];
-    formik.setFieldValue(name, file);
+  const handleImageChange = async (event) => {
+    if (event.target.name === "profileImage") {
+      setUploading(true);
+      const file = await uploadToCloudinary(event.target.files[0]);
+      const {name} = event.target;
+      formik.setFieldValue(name, file);
+      setSelectedImage(file);
+      setUploading(false);
+    } else {
+      setUploadingBanner(true);
+      const file = await uploadToCloudinary(event.target.files[0]);
+      const {name} = event.target;
+      formik.setFieldValue(name, file);
+      setSelectedBanner(file);
+      setUploadingBanner(false);
+    }
   };
   return (
     <div>
@@ -71,12 +99,7 @@ export default function ProfileModal() {
       >
         Edit Profile
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box sx={style}>
           <form onSubmit={formik.handleSubmit}>
             <div className="flex items-center justify-between px-3 py-1">
@@ -89,7 +112,7 @@ export default function ProfileModal() {
               <Button
                 type="submit"
                 variant="contained"
-                onSubmit={handleClose}
+                onSubmit={handleSubmit}
                 sx={{borderRadius: "20px", bgcolor: "black", color: "white"}}
               >
                 Save
@@ -99,34 +122,47 @@ export default function ProfileModal() {
               <>
                 <div className="w-full">
                   <div className="relative">
-                    <img
-                      className="w-full h-[12rem] object-cover object-center mt-2"
-                      src="https://images.unsplash.com/photo-1519060825752-c4832f2d400a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWVzdGhldGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
-                      alt=""
-                    />
+                    {uploadingBanner ? (
+                      <CircularProgress color="secondary" />
+                    ) : (
+                      <img
+                        className="w-full h-[12rem] object-cover object-center mt-2"
+                        src={
+                          selectedBanner ||
+                          auth.user.bannerImage ||
+                          "https://images.unsplash.com/photo-1461696114087-397271a7aedc?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWVzdGhldGljfGVufDB8fDB8fHww"
+                        }
+                        alt="Banner Image"
+                      />
+                    )}
                     <input
                       type="file"
                       className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
                       onChange={handleImageChange}
-                      name="backgroundImage"
+                      name="bannerImage"
                     />
                   </div>
                 </div>
                 <div className=" w-full mt-5 h-[3rem] ml-3 transform -translate-y-20">
                   <div className="relative">
-                    <Avatar
-                      alt="username"
-                      src="/images/profile.jpeg"
-                      sx={{
-                        width: "7rem",
-                        height: "7rem",
-                        border: `4px solid ${"white"}`,
-                      }}
-                    />
+                    {uploading ? (
+                      <CircularProgress color="secondary" />
+                    ) : (
+                      <Avatar
+                        alt={auth.user.fullName}
+                        src={selectedImage || auth.user.profileImage}
+                        sx={{
+                          width: "7rem",
+                          height: "7rem",
+                          border: `4px solid ${"white"}`,
+                          bgcolor: "#b91c1c",
+                        }}
+                      />
+                    )}
                     <input
                       type="file"
                       className="absolute top-0 left-0 w-[7rem] h-full opacity-0 cursor-pointer"
-                      name="image"
+                      name="profileImage"
                       onChange={handleImageChange}
                     />
                   </div>
@@ -145,6 +181,7 @@ export default function ProfileModal() {
                   helperText={formik.touched.fullName && formik.errors.fullName}
                 />
                 <TextField
+                  placeholder="Introduce Yourself"
                   multiline
                   rows={2}
                   fullWidth
@@ -158,6 +195,18 @@ export default function ProfileModal() {
                 />
                 <TextField
                   fullWidth
+                  id="profession"
+                  name="profession"
+                  label="Profession"
+                  placeholder="Developer"
+                  value={formik.values.profession}
+                  onChange={formik.handleChange}
+                  error={formik.touched.profession && Boolean(formik.errors.profession)}
+                  helperText={formik.touched.profession && formik.errors.profession}
+                />
+                <TextField
+                  fullWidth
+                  placeholder="Mumbai, India"
                   id="location"
                   name="location"
                   label="Location"
@@ -171,6 +220,7 @@ export default function ProfileModal() {
                   id="website"
                   name="website"
                   label="Website"
+                  placeholder="www.dunder-mifflin.com"
                   value={formik.values.website}
                   onChange={formik.handleChange}
                   error={formik.touched.website && Boolean(formik.errors.website)}
@@ -182,11 +232,7 @@ export default function ProfileModal() {
                   <p className="text-xl">10 November &#183; 2000</p>
                 </div>
                 <div className="flex items-center justify-between w-full !mb-8 cursor-pointer hover:bg-slate-100">
-                  {true ? (
-                    <p className="text-lg ">Switch to professional</p>
-                  ) : (
-                    <p className="text-lg">Edit professional profile</p>
-                  )}
+                  {true ? <p className="text-lg ">Switch to professional</p> : <p className="text-lg">Edit professional profile</p>}
                   <ChevronRightIcon />
                 </div>
               </div>

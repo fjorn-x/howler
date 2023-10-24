@@ -84,7 +84,7 @@ const Navigation = () => {
           {navigation.map((item) => (
             <div
               className="hover:bg-gray-200 cursor-pointer flex space-x-3 items-center rounded-full p-3 "
-              onClick={() => (item.title === "Profile" ? navigate(`/profile/${5}`) : navigate(item.path))}
+              onClick={() => (item.title === "Profile" ? navigate(`/profile/${auth?.user?.id}`) : navigate(item.path))}
             >
               {item.icon}
               <p className="text-xl">{item.title}</p>
@@ -112,7 +112,11 @@ const Navigation = () => {
       </div>
       <div className=" mt-5 mb-5">
         <div className="flex items-center justify-between space-x-3 hover:bg-gray-200 rounded-full p-3">
-          <Avatar alt="Hamza Shaikh" src="/images/profile.jpeg" />
+          <Avatar
+            sx={{bgcolor: "#b91c1c"}}
+            alt={auth.user.fullName}
+            src={auth.user.profileImage === null ? "null" : auth.user.profileImage}
+          />
           <div>
             <span>{auth.user?.fullName}</span>
             <p className="opacity-70">@{auth.user?.fullName.toLowerCase().replace(/\s/g, "_")}</p>

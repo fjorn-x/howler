@@ -1,17 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import {Avatar, Button, TextField, styled} from "@mui/material";
+import {Avatar, Button, CircularProgress, TextField, styled} from "@mui/material";
 import {useFormik} from "formik";
 import React, {useEffect, useState} from "react";
 import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
-import {TextareaAutosize as BaseTextareaAutosize} from "@mui/base";
 
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import HowlCard from "./HowlCard";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllHowls} from "../../State/Howl/HowlSlice";
+import {createHowl, getAllHowls} from "../../State/Howl/HowlSlice";
+import {uploadToCloudinary} from "../../Utils/uploadToCloudinary";
 
 const NoBorderTextField = styled(TextField)({
   ".css-8ewcdo-MuiInputBase-root-MuiOutlinedInput-root": {
@@ -24,42 +24,59 @@ const NoBorderTextField = styled(TextField)({
   "& .Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
       borderRadius: 0,
-      borderBottom: "1px solid #6b7280",
+      borderBottom: "1px solid #b91c1c",
     },
   },
 });
 
 const validationSchema = Yup.object().shape({
-  content: Yup.string().required("Woof text is required"),
+  content: Yup.string(),
+  image: Yup.string(),
+});
+
+validationSchema.test("atLeastOneField", null, function (values) {
+  const {content, image} = values;
+
+  if (!content && !image) {
+    return this.createError({
+      path: "content",
+      message: "At least one of content or image must be populated.",
+    });
+  }
+  return true;
 });
 
 const HomeFeed = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const dispatch = useDispatch();
-  const {howl} = useSelector((store) => store);
-  const handleSubmit = (values) => {
-    console.log("values", values);
+  const {howl, auth} = useSelector((store) => store);
+  const handleSubmit = (values, actions) => {
+    dispatch(createHowl(values));
+    setSelectedImage(null);
+
+    actions.resetForm();
   };
   const formik = useFormik({
     initialValues: {
       content: "",
       image: "",
+      isHowl: true,
     },
     onSubmit: handleSubmit,
     validationSchema,
   });
-  const handleSelectImage = (event) => {
+  const handleSelectImage = async (event) => {
     setUploadingImage(true);
-    const imgUrl = event.target.files[0];
+    const imgUrl = await uploadToCloudinary(event.target.files[0]);
     formik.setFieldValue("image", imgUrl);
     setSelectedImage(imgUrl);
-    setUploadingImage(true);
+    setUploadingImage(false);
   };
 
   useEffect(() => {
     dispatch(getAllHowls());
-  }, [howl.like, howl.retweet]);
+  }, [howl.like, howl.retweet, howl.howl]);
 
   return (
     <div className="border-x overscroll-none">
@@ -68,7 +85,12 @@ const HomeFeed = () => {
       </section>
       <section className="p-3 border-y">
         <div className="flex space-x-5">
-          <Avatar alt="username" src="images/profile.jpeg" />
+         
+          <Avatar
+            sx={{bgcolor: "#b91c1c"}}
+            alt={auth.user.fullName}
+            src={auth.user.profileImage === null ? "null" : auth.user.profileImage}
+          />
           <div className="w-full">
             <form onSubmit={formik.handleSubmit}>
               <div>
@@ -91,6 +113,13 @@ const HomeFeed = () => {
                   minRows={1}
                   maxRows={5}
                 />
+              </div>
+              <div>
+                {uploadingImage ? (
+                  <CircularProgress color="secondary" />
+                ) : (
+                  selectedImage && <img src={selectedImage} alt="" className="mt-[14px] w-full border border-gray-400 p-5 rounded-md" />
+                )}
               </div>
 
               <div className="flex justify-between items-center mt-5">

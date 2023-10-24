@@ -46,7 +46,7 @@ export const getAllHowls = createAsyncThunk("api/getAllHowls", async (nullData, 
     const {data} = await axios.get(`${API_BASE_URL}/api/howls/all`, {
       headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
     });
-    console.log(`get all howls: ${data}`);
+    console.log("get all howls: ", data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -138,10 +138,9 @@ export const replyHowl = createAsyncThunk("api/replyHowl", async (howlData, {rej
     const {data} = await axios.post(`${API_BASE_URL}/api/howls/reply`, howlData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        "Content-Type": "application/json",
       },
     });
-    console.log(`reply howl :${data}`);
+    console.log(`reply howl :${JSON.stringify(data)}`);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {

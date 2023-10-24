@@ -10,8 +10,7 @@ const initialState = {
   jwt: null,
   message: null,
   status: false,
-  // findUser: null,
-  // updateUser: false,
+  findUser: null,
 };
 
 export const registerUser = createAsyncThunk("auth/register", async (registerData, {rejectWithValue}) => {
@@ -74,7 +73,7 @@ export const getUserById = createAsyncThunk("auth/getUserById", async (userId, {
         "Content-Type": "application/json",
       },
     });
-    console.log(`get user by id : ${data}`);
+    console.log("get user by id :", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -90,10 +89,9 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (updateData,
     const {data} = await axios.put(`${API_BASE_URL}/api/users/update`, updateData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        "Content-Type": "application/json",
       },
     });
-    console.log(`update user : ${data}`);
+    console.log("update user : ", JSON.stringify(data));
     return data;
   } catch (error) {
     console.log(error);
@@ -160,11 +158,7 @@ const AuthSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    [changePassword.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.message = payload.message;
-      state.status = payload.status;
-    },
+
     [changePassword.rejected]: (state, {payload}) => {
       state.loading = false;
       state.message = payload.message;
@@ -174,10 +168,7 @@ const AuthSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    [registerUser.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.jwt = payload;
-    },
+
     [registerUser.rejected]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
@@ -186,10 +177,7 @@ const AuthSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    [loginUser.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.jwt = payload;
-    },
+
     [loginUser.rejected]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
@@ -197,10 +185,6 @@ const AuthSlice = createSlice({
     [getUserProfile.pending]: (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getUserProfile.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.user = payload;
     },
     [getUserProfile.rejected]: (state, {payload}) => {
       state.loading = false;
@@ -210,10 +194,6 @@ const AuthSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    [getUserById.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.findUser = payload;
-    },
     [getUserById.rejected]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
@@ -221,11 +201,6 @@ const AuthSlice = createSlice({
     [updateUser.pending]: (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [updateUser.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.user = payload;
-      state.updateUser = true;
     },
     [updateUser.rejected]: (state, {payload}) => {
       state.loading = false;
@@ -235,13 +210,44 @@ const AuthSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    [followUser.fulfilled]: (state, {payload}) => {
-      state.loading = false;
-      state.findUser = payload;
-    },
     [followUser.rejected]: (state, {payload}) => {
       state.loading = false;
       state.error = payload;
+    },
+    [loginUser.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.jwt = payload;
+    },
+    [registerUser.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.jwt = payload;
+    },
+    [changePassword.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.message = payload.message;
+      state.status = payload.status;
+    },
+    [getUserProfile.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.user = payload;
+    },
+
+    [getUserById.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.error = false;
+      state.findUser = payload;
+    },
+
+    [updateUser.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.error = false;
+      state.findUser = payload;
+      state.user = payload;
+    },
+
+    [followUser.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.findUser = payload;
     },
   },
 });
