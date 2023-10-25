@@ -145,7 +145,7 @@ const Profile = () => {
                 ))}
 
               {howl.retweetHowls
-                .filter((item) => item.retweetUsersId.includes(auth.findUser?.id))
+                .filter((item) => item.retweetUsersId.includes(auth.findUser?.id) && item.user.id !== auth.findUser?.id)
                 .map((item) => (
                   <HowlCard item={item} isRetweet={true} />
                 ))}

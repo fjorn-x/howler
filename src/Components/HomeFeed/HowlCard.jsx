@@ -19,7 +19,13 @@ const HowlCard = ({item, isRetweet = false}) => {
   const dispatch = useDispatch();
   const {auth} = useSelector((store) => store);
 
-  const linkToCopy = `http://localhost:3000/${item?.user?.id}/post/${item?.id}`;
+  const differenceInSeconds = (new Date().getTime() - new Date(item?.createdAt?.replace("T", " ").substring(0, 19)).getTime()) / 1000;
+
+  const linkToCopy = `http://localhost:${process.env.PORT || "3000"}/${item?.user?.id}/post/${item?.id}`;
+
+  console.log(
+    Math.round(differenceInSeconds) > 3600 ? `${Math.round(differenceInSeconds / 3600)}h` : `${Math.round(differenceInSeconds / 3600)}m`
+  );
 
   const handleCopyLink = (text, result) => {
     setCopy(true);
@@ -58,7 +64,12 @@ const HowlCard = ({item, isRetweet = false}) => {
               <Verified className="text-[#b91c1c]" />
 
               <span className="text-gray-600 ">{item?.user?.fullName.toLowerCase().trim().replace(/\s/g, "_")}</span>
-              <span className="text-gray-600">&#183; 2m</span>
+              <span className="text-gray-600">
+                &#183;{" "}
+                {Math.round(differenceInSeconds) > 3600
+                  ? `${Math.round(differenceInSeconds / 3600)}h`
+                  : `${Math.round(differenceInSeconds / 60)}m`}
+              </span>
             </div>
             <MoreButton />
           </div>

@@ -8,6 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import React from "react";
+import HowlFromNav from "./HowlFromNav";
 
 const image = {
   width: "50px",
@@ -93,7 +94,7 @@ const Navigation = () => {
         </div>
 
         <div className="mt-3">
-          <Button
+          {/* <Button
             sx={{
               width: "90%",
               borderRadius: "29px",
@@ -107,7 +108,8 @@ const Navigation = () => {
             variant="contained"
           >
             HOWL
-          </Button>
+          </Button> */}
+          <HowlFromNav/>
         </div>
       </div>
       <div className=" mt-5 mb-5">

@@ -123,7 +123,9 @@ export default function ProfileModal() {
                 <div className="w-full">
                   <div className="relative">
                     {uploadingBanner ? (
-                      <CircularProgress color="secondary" />
+                      <div className="flex justify-center-items-center w-full h-[12rem] flex-grow">
+                        <CircularProgress color="secondary" />
+                      </div>
                     ) : (
                       <img
                         className="w-full h-[12rem] object-cover object-center mt-2"

@@ -54,7 +54,6 @@ const HomeFeed = () => {
   const handleSubmit = (values, actions) => {
     dispatch(createHowl(values));
     setSelectedImage(null);
-
     actions.resetForm();
   };
   const formik = useFormik({
