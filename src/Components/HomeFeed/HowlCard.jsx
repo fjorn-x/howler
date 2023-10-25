@@ -9,14 +9,15 @@ import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import MoreButton from "../Extra/MoreButton";
 import ReplyModal from "./ReplyModal";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {likeHowl, retweet} from "../../State/Howl/HowlSlice";
 import CopyToClipboard from "react-copy-to-clipboard";
 
-const HowlCard = ({item}) => {
+const HowlCard = ({item, isRetweet = false}) => {
   const [copy, setCopy] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {auth} = useSelector((store) => store);
 
   const linkToCopy = `http://localhost:3000/${item?.user?.id}/post/${item?.id}`;
 
@@ -36,6 +37,12 @@ const HowlCard = ({item}) => {
   };
   return (
     <div className="border-b-2 p-3 pr-3">
+      {isRetweet && (
+        <div className="flex items-center text-gray-400 mb-3 text-xs space-x-5">
+          <RepeatOutlinedIcon className="cursor-pointer" fontSize="small" />
+          <p>{auth?.findUser.fullName.split(" ")[0]} Retweeted</p>
+        </div>
+      )}
       <div className="flex space-x-5">
         <Avatar
           sx={{bgcolor: "#b91c1c"}}
@@ -80,7 +87,7 @@ const HowlCard = ({item}) => {
             </div>
             <div className="space-x-3 flex items-center text-gray-600">
               <BarChartOutlinedIcon className="cursor-pointer" fontSize="small" />
-              <p>34</p>
+              <p>{item?.user?.followers?.length}</p>
             </div>
             <div className="space-x-3 flex items-center text-gray-600 mr-2">
               <CopyToClipboard text={linkToCopy} onCopy={handleCopyLink}>

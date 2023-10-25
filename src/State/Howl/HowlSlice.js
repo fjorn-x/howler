@@ -10,7 +10,7 @@ export const createHowl = createAsyncThunk("howl/create", async (howlData, {reje
         "Content-Type": "application/json",
       },
     });
-    console.log(`create howl :${data}`);
+    console.log("create howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -57,6 +57,23 @@ export const getAllHowls = createAsyncThunk("api/getAllHowls", async (nullData, 
     }
   }
 });
+export const getAllReplyHowls = createAsyncThunk("api/getAllReplyHowls", async (nullData, thunkAPI) => {
+  try {
+    // const {data} = await axios.get("/api/howls/");
+    const {data} = await axios.get(`${API_BASE_URL}/api/howls/reply/howls`, {
+      headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
+    });
+    console.log("get all reply howls: ", data);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    if (error.response && error.response.data.message) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    } else {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+});
 
 export const getUserHowls = createAsyncThunk("api/getUserHowls", async (userId, thunkAPI) => {
   try {
@@ -66,7 +83,7 @@ export const getUserHowls = createAsyncThunk("api/getUserHowls", async (userId, 
         "Content-Type": "application/json",
       },
     });
-    console.log(`get user howls: ${data}`);
+    console.log("get user howls: ", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -85,7 +102,7 @@ export const getUserLikeHowls = createAsyncThunk("api/getUserLikeHowls", async (
         "Content-Type": "application/json",
       },
     });
-    console.log(`get user like howls: ${data}`);
+    console.log("get user like howls:", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -103,7 +120,7 @@ export const likeHowl = createAsyncThunk("api/likeHowl", async (howlId, {rejectW
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log(`like howl :${JSON.stringify(data)}`);
+    console.log("like howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -122,7 +139,7 @@ export const findHowlById = createAsyncThunk("api/findHowlById", async (howlId, 
         "Content-Type": "application/json",
       },
     });
-    console.log(`find howl by id: ${data}`);
+    console.log("find howl by id: ", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -140,7 +157,7 @@ export const replyHowl = createAsyncThunk("api/replyHowl", async (howlData, {rej
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log(`reply howl :${JSON.stringify(data)}`);
+    console.log("reply howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -159,7 +176,7 @@ export const retweet = createAsyncThunk("api/retweet", async (howlId, {rejectWit
         "Content-Type": "application/json",
       },
     });
-    console.log(`retweet howl :${data}`);
+    console.log("retweet howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -180,6 +197,8 @@ const HowlSlice = createSlice({
     likedHowls: [],
     like: null,
     retweet: null,
+    replyHowls: [],
+    retweetHowls: [],
   },
   reducers: {},
   extraReducers: {
@@ -277,7 +296,7 @@ const HowlSlice = createSlice({
     [getUserHowls.fulfilled]: (state, {payload}) => {
       state.loading = false;
       state.error = null;
-      state.howls = payload;
+      state.retweetHowls = payload;
     },
 
     [getUserLikeHowls.fulfilled]: (state, {payload}) => {
@@ -302,9 +321,23 @@ const HowlSlice = createSlice({
     [replyHowl.fulfilled]: (state, {payload}) => {
       state.loading = false;
       state.error = null;
+      state.replyHowls = [payload, ...state.replyHowls];
       state.howl = payload;
     },
 
+    [getAllReplyHowls.fulfilled]: (state, {payload}) => {
+      state.loading = false;
+      state.error = null;
+      state.replyHowls = payload;
+    },
+    [getAllReplyHowls.pending]: (state, {payload}) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [getAllReplyHowls.rejected]: (state, {payload}) => {
+      state.loading = false;
+      state.error = payload;
+    },
     [retweet.fulfilled]: (state, {payload}) => {
       state.loading = false;
       state.error = null;

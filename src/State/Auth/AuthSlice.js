@@ -11,6 +11,7 @@ const initialState = {
   message: null,
   status: false,
   findUser: null,
+  update: null,
 };
 
 export const registerUser = createAsyncThunk("auth/register", async (registerData, {rejectWithValue}) => {
@@ -20,6 +21,8 @@ export const registerUser = createAsyncThunk("auth/register", async (registerDat
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
+    console.log("register user : ", data);
+
     return data.jwt;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -37,6 +40,8 @@ export const loginUser = createAsyncThunk("auth/login", async (loginData, {rejec
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
+    console.log("login user : ", data);
+
     return data.jwt;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -52,7 +57,7 @@ export const getUserProfile = createAsyncThunk("auth/getProfile", async (jwt, {r
     const {data} = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {Authorization: `Bearer ${jwt}`},
     });
-    console.log(data);
+    console.log("get user profile", data);
 
     return data;
   } catch (error) {
@@ -91,7 +96,7 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (updateData,
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log("update user : ", JSON.stringify(data));
+    console.log("update user : ", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -110,7 +115,7 @@ export const followUser = createAsyncThunk("auth/followUser", async (userId, {re
         "Content-Type": "application/json",
       },
     });
-    console.log(`follow user : ${data}`);
+    console.log("follow user : ", data);
     return data;
   } catch (error) {
     console.log(error);
@@ -243,6 +248,7 @@ const AuthSlice = createSlice({
       state.error = false;
       state.findUser = payload;
       state.user = payload;
+      state.update = payload;
     },
 
     [followUser.fulfilled]: (state, {payload}) => {

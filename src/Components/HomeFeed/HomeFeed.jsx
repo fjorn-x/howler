@@ -10,7 +10,7 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import HowlCard from "./HowlCard";
 import {useDispatch, useSelector} from "react-redux";
-import {createHowl, getAllHowls} from "../../State/Howl/HowlSlice";
+import {createHowl, getAllHowls, getAllReplyHowls} from "../../State/Howl/HowlSlice";
 import {uploadToCloudinary} from "../../Utils/uploadToCloudinary";
 
 const NoBorderTextField = styled(TextField)({
@@ -76,6 +76,7 @@ const HomeFeed = () => {
 
   useEffect(() => {
     dispatch(getAllHowls());
+    dispatch(getAllReplyHowls());
   }, [howl.like, howl.retweet, howl.howl]);
 
   return (
@@ -85,7 +86,6 @@ const HomeFeed = () => {
       </section>
       <section className="p-3 border-y">
         <div className="flex space-x-5">
-         
           <Avatar
             sx={{bgcolor: "#b91c1c"}}
             alt={auth.user.fullName}
@@ -158,12 +158,15 @@ const HomeFeed = () => {
           </div>
         </div>
       </section>
+
       <section>
-        {howl.howls?.map((item) => (
-          <>
+        {howl?.howls
+          // ?.filter(
+          //   (item) => item?.user?.id === auth.user?.id || item?.user?.followers?.filter((fol) => fol.id === auth.user.id).length === 1
+          // )
+          .map((item) => (
             <HowlCard item={item} />
-          </>
-        ))}
+          ))}
       </section>
     </div>
   );

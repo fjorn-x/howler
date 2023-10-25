@@ -74,6 +74,7 @@ export default function ReplyModal({item}) {
   const {auth} = useSelector((store) => store);
   const handleSubmit = (values, actions) => {
     dispatch(replyHowl(values));
+
     setSelectedImage(null);
     actions.resetForm();
     handleClose();

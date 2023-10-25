@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
@@ -12,6 +13,7 @@ import HowlCard from "../HomeFeed/HowlCard";
 import ProfileModal from "./ProfileModal";
 import {useDispatch, useSelector} from "react-redux";
 import {followUser, getUserById} from "../../State/Auth/AuthSlice";
+import {getAllHowls, getAllReplyHowls, getUserHowls} from "../../State/Howl/HowlSlice";
 
 const Profile = () => {
   const [value, setValue] = React.useState("1");
@@ -33,7 +35,10 @@ const Profile = () => {
   console.log("flag", flag);
   useEffect(() => {
     dispatch(getUserById(userId));
-  }, [userId]);
+    dispatch(getAllHowls());
+    dispatch(getAllReplyHowls());
+    dispatch(getUserHowls(userId));
+  }, [howl.like, howl.retweet, howl.howl, userId, auth.update]);
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   return (
@@ -137,6 +142,12 @@ const Profile = () => {
                 .filter((item) => item.user.id === auth.findUser?.id)
                 .map((item) => (
                   <HowlCard item={item} />
+                ))}
+
+              {howl.retweetHowls
+                .filter((item) => item.retweetUsersId.includes(auth.findUser?.id))
+                .map((item) => (
+                  <HowlCard item={item} isRetweet={true} />
                 ))}
             </TabPanel>
             <TabPanel value="2">
