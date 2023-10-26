@@ -148,6 +148,25 @@ export const changePassword = createAsyncThunk("auth/changePassword", async (pas
   }
 });
 
+export const googleLogin = createAsyncThunk("auth/register", async (jwt, {rejectWithValue}) => {
+  try {
+    const {data} = await axios.post(`${API_BASE_URL}/auth/login/google`, jwt);
+
+    if (data.jwt) {
+      localStorage.setItem("jwt", data.jwt);
+    }
+    console.log("google login user : ", data);
+
+    return data.jwt;
+  } catch (error) {
+    if (error.response && error.response.data.message) {
+      return rejectWithValue(error.response.data.message);
+    } else {
+      return rejectWithValue(error.message);
+    }
+  }
+});
+
 const AuthSlice = createSlice({
   name: "auth",
   initialState,

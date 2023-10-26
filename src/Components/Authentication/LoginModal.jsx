@@ -1,5 +1,5 @@
 import {Box, Button, Divider, IconButton, InputAdornment, Modal, TextField} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import {useFormik} from "formik";
 import * as Yup from "yup";
@@ -8,6 +8,7 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {GoogleLogin} from "@react-oauth/google";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../../State/Auth/AuthSlice";
+import jwtDecode from "jwt-decode";
 
 const style = {
   position: "absolute",
@@ -25,6 +26,9 @@ const style = {
 
 const LoginModal = () => {
   const [open, setOpen] = React.useState(false);
+  const [googleLogin, setGoogleLogin] = useState(false);
+
+  const handleGoogleLogin = () => setGoogleLogin(true);
 
   const dispatch = useDispatch();
 
@@ -89,11 +93,13 @@ const LoginModal = () => {
 
           <form className="flex flex-col justify-center items-center py-5 " onSubmit={formik.handleSubmit}>
             <div className="w-[60%] space-y-6">
-              <h1 className="text-2xl font-bold"> Enter Your Login Credentials </h1>
-
+              <h1 className="text-2xl font-bold"> {googleLogin ? "Enter Password" : "Enter Your Login Credentials"} </h1>
               <div className="flex justify-center items-center">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
+                    const {email} = jwtDecode(credentialResponse.credential);
+                    handleGoogleLogin();
+                    formik.setFieldValue("email", email);
                     console.log(credentialResponse);
                   }}
                   onError={() => {
