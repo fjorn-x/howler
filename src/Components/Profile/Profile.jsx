@@ -14,7 +14,7 @@ import HowlCard from "../HomeFeed/HowlCard";
 import ProfileModal from "./ProfileModal";
 import {useDispatch, useSelector} from "react-redux";
 import {followUser, getUserById} from "../../State/Auth/AuthSlice";
-import {getAllHowls, getAllReplyHowls, getUserHowls} from "../../State/Howl/HowlSlice";
+import {getAllHowls, getAllReplyHowls, getUserHowls, getUserLikeHowls} from "../../State/Howl/HowlSlice";
 import PublicIcon from "@mui/icons-material/Public";
 
 const Profile = () => {
@@ -40,6 +40,7 @@ const Profile = () => {
     dispatch(getAllHowls());
     dispatch(getAllReplyHowls());
     dispatch(getUserHowls(userId));
+    dispatch(getUserLikeHowls(userId));
   }, [howl.like, howl.retweet, howl.howl, userId, auth.update]);
 
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -153,15 +154,28 @@ const Profile = () => {
                   <HowlCard item={item} isRetweet={true} />
                 ))}
             </TabPanel>
-            <TabPanel value="2">
+            <TabPanel value="2" className="no-padding">
               {howl?.replyHowls
                 ?.filter((howl) => howl.user.id === auth.findUser?.id)
                 .map((item) => (
                   <HowlCard item={item} />
                 ))}
             </TabPanel>
-            <TabPanel value="3">Media</TabPanel>
-            <TabPanel value="4">Likes</TabPanel>
+            <TabPanel value="3" className="no-padding">
+              {howl.howls
+                .filter((item) => item.user.id === auth.findUser?.id)
+                .filter((item) => item.image)
+                .map((item) => (
+                  <HowlCard item={item} />
+                ))}
+            </TabPanel>
+            <TabPanel value="4" className="no-padding">
+              {howl?.likedHowls
+                ?.filter((howl) => howl.user.id !== auth.findUser?.id)
+                ?.map((item) => (
+                  <HowlCard item={item} />
+                ))}
+            </TabPanel>
           </TabContext>
         </Box>
       </section>
