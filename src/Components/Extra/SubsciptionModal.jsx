@@ -7,6 +7,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
+import axios from "axios";
+import {API_BASE_URL} from "../../config/api";
+import {useSelector} from "react-redux";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -34,6 +38,36 @@ export default function SubscriptionModal() {
   const [plan, setPlan] = React.useState("annually");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const item = useSelector((store) => store.auth);
+
+  const handlePayment = async () => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    document.body.appendChild(script);
+    const order = await axios.get(`${API_BASE_URL}/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
+    console.log(order);
+
+    var options = {
+      key: "rzp_test_C6MyjQb5ed2Jvz",
+      amount: plan === "annually" ? 1000 : 100,
+      currency: "INR",
+      name: "Howler",
+      description: "Howler Pro",
+      order_id: order.id,
+      handler: function (response) {
+        console.log(response.razorpay_payment_id);
+      },
+      prefill: {
+        name: item?.user.fullName,
+        email: item?.user.fullName,
+      },
+      theme: {
+        color: "#b91c1c",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
 
   return (
     <div>
@@ -104,14 +138,27 @@ export default function SubscriptionModal() {
           </div>
           <div className="flex justify-center border-t-2 border-gray-300 py-3">
             <div className="w-[70%] space-y-3">
-              <div className="flex justify-center items-center border rounded-full px-10 py-2 border-gray-500 bg-black text-white cursor-pointer hover:opacity-80">
-                <span className="italic line-through"> &#8377;6800</span>
-                <span className="italic px-2"> &#8377;1/year</span>
-              </div>
+              <Button
+                variant="contained"
+                fullWidth
+                className="flex justify-center items-center"
+                sx={{
+                  borderRadius: "30px",
+                  backgroundColor: "black",
+                  "&:hover": {
+                    backgroundColor: "black",
+                    opacity: "80%",
+                  },
+                }}
+                onClick={handlePayment}
+              >
+                <span className="italic line-through"> &#8377;{plan === "monthly" ? "650" : "6800"}</span>
+                <span className="italic px-2"> &#8377;{plan === "monthly" ? "1" : "10"}/year</span>
+              </Button>
+
               <p className="text-xs leading-none text-gray-500">
-                By subscribing, you agree to our 'Top-Secret Ninja Handshake of Employment.' Subscriptions auto-renew until you shout 'Stop
-                the Presses!' Cancel anytime, though we might shed a single tear. A verified phone number is required, but don't worry, we
-                won't interrupt your favorite TV shows. Ready to add some humor and expertise to your team?
+                By subscribing, you agree to our 'Top-Secret Ninja Handshake of Becoming Verified.' Subscriptions auto-renew until you shout
+                'Bankruptcyyy!' Cancel anytime, though we might shed a single tear. A verified phone number is not required.
               </p>
             </div>
           </div>
