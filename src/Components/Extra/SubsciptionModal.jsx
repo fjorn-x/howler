@@ -40,14 +40,32 @@ export default function SubscriptionModal() {
   const handleClose = () => setOpen(false);
   const item = useSelector((store) => store.auth);
 
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async () => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    document.body.appendChild(script);
+    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+
+    if (!res) {
+      console.log("Razorpay client failed to load");
+      return;
+    }
+
     const order = await axios.get(`${API_BASE_URL}/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
     console.log(order);
 
-    var options = {
+    const options = {
       key: "rzp_test_C6MyjQb5ed2Jvz",
       amount: plan === "annually" ? 1000 : 100,
       currency: "INR",

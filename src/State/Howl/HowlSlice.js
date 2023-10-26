@@ -23,7 +23,7 @@ export const createHowl = createAsyncThunk("howl/create", async (howlData, {reje
 
 export const deleteHowl = createAsyncThunk("howl/delete", async (howlId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.delete(`${API_BASE_URL}/api/howls${howlId}`, {
+    const {data} = await axios.delete(`${API_BASE_URL}/api/howls/${howlId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -32,6 +32,8 @@ export const deleteHowl = createAsyncThunk("howl/delete", async (howlId, {reject
     console.log("delete tweet", data);
     return howlId;
   } catch (error) {
+    console.log("delete tweet", error);
+
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
     } else {

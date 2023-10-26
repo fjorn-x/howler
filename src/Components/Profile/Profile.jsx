@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from "react";
@@ -14,6 +15,7 @@ import ProfileModal from "./ProfileModal";
 import {useDispatch, useSelector} from "react-redux";
 import {followUser, getUserById} from "../../State/Auth/AuthSlice";
 import {getAllHowls, getAllReplyHowls, getUserHowls} from "../../State/Howl/HowlSlice";
+import PublicIcon from "@mui/icons-material/Public";
 
 const Profile = () => {
   const [value, setValue] = React.useState("1");
@@ -70,7 +72,7 @@ const Profile = () => {
             src={auth.findUser?.profileImage === null ? "null" : auth.findUser?.profileImage}
             sx={{bgcolor: "#b91c1c", width: "9rem", height: "9rem", border: `4px solid ${"white"}`}}
           />
-          {flag ? (
+          {auth.findUser?.req_user ? (
             <ProfileModal />
           ) : (
             <Button variant="outlined" sx={{borderRadius: "20px"}} onClick={handleFollowUser}>
@@ -87,28 +89,29 @@ const Profile = () => {
         </div>
         <div className="mt-2 space-y-3">
           {auth.findUser?.bio && <p className="text-md">{auth.findUser?.bio}</p>}
-          <div className=" flex space-x-4">
+          <div className=" flex flex-wrap">
             {auth.findUser?.profession && (
-              <div className="flex items-center text-gray-500">
+              <div className="flex items-center text-gray-500 mr-4">
                 <BusinessCenterIcon fontSize="small" />
                 <p className="ml-1 text-sm">{auth.findUser?.profession}</p>
               </div>
             )}
             {auth.findUser?.location && (
-              <div className="flex items-center text-gray-500">
+              <div className="flex items-center text-gray-500 mr-4">
                 <LocationOnIcon fontSize="small" />
                 <p className="ml-1 text-sm">{auth.findUser?.location}</p>
               </div>
             )}
-            <div className="flex items-center text-gray-500">
+            <div className="flex items-center text-gray-500 mr-4">
               <CalendarMonthIcon fontSize="small" />
               <p className="ml-1 text-sm">
                 Joined {months[new Date().getMonth() - 1]} {new Date().getFullYear()}
               </p>
             </div>
             {auth.findUser?.website && (
-              <div className="flex items-center text-gray-500">
-                <a href={auth.findUser?.website} className="ml-1 text-sm">
+              <div className="flex items-center underline text-gray-500 mr-4">
+                <PublicIcon fontSize="small" />
+                <a href={auth.findUser?.website} target="_blank" className="ml-1 text-sm">
                   {auth.findUser?.website}
                 </a>
               </div>

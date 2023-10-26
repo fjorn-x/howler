@@ -61,8 +61,8 @@ const SignupModal = () => {
   };
 
   const handleDateChange = (name) => (event) => {
-    formik.setFieldValue("dateOfBirth", {
-      ...formik.values.dateOfBirth,
+    formik.setFieldValue("birthDate", {
+      ...formik.values.birthDate,
       [name]: event.target.value,
     });
   };
@@ -79,7 +79,7 @@ const SignupModal = () => {
       .matches(/(?=.*[A-Z])\w+/, "Password should contain at least one uppercase")
       .matches(/\d/, "Password should contain at least one number")
       .matches(/[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/, "Password should contain at least one special character"),
-    dateOfBirth: Yup.object().shape({
+    birthDate: Yup.object().shape({
       day: Yup.number().required(),
       month: Yup.string().required(),
       year: Yup.number().required(),
@@ -91,7 +91,7 @@ const SignupModal = () => {
       fullName: "",
       email: "",
       password: "",
-      dateOfBirth: {
+      birthDate: {
         day: "",
         month: "",
         year: "",
@@ -99,9 +99,9 @@ const SignupModal = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      // const {day, month, year} = values.dateOfBirth;
-      // const dateOfBirth = `${year}-${month}-${day}`;
-      // values.dateOfBirth = dateOfBirth;
+      const {day, month, year} = values.birthDate;
+      const birthDate = `${year}-${month}-${day}`;
+      values.birthDate = birthDate;
       // const date=new Date().setFullYear(year,month,day);
       dispatch(registerUser(values));
       console.log("Signup values : ", values);
@@ -193,7 +193,7 @@ const SignupModal = () => {
                   <Select
                     label="Day"
                     name="day"
-                    value={formik.values.dateOfBirth.day}
+                    value={formik.values.birthDate.day}
                     onBlur={formik.handleBlur}
                     onChange={handleDateChange("day")}
                   >
@@ -209,7 +209,7 @@ const SignupModal = () => {
                   <Select
                     label="Month"
                     name="month"
-                    value={formik.values.dateOfBirth.month}
+                    value={formik.values.birthDate.month}
                     onBlur={formik.handleBlur}
                     onChange={handleDateChange("month")}
                   >
@@ -226,7 +226,7 @@ const SignupModal = () => {
                   <Select
                     label="Year"
                     name="year"
-                    value={formik.values.dateOfBirth.year}
+                    value={formik.values.birthDate.year}
                     onBlur={formik.handleBlur}
                     onChange={handleDateChange("year")}
                   >

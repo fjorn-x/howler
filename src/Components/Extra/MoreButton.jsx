@@ -1,10 +1,14 @@
 import {IconButton, Menu, MenuItem} from "@mui/material";
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteHowl} from "../../State/Howl/HowlSlice";
 
-const MoreButton = () => {
+const MoreButton = ({item}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -12,7 +16,7 @@ const MoreButton = () => {
     setAnchorEl(null);
   };
   const handleDelete = () => {
-    console.log("delete tweet");
+    dispatch(deleteHowl(item.id));
     handleClose();
   };
   return (
@@ -37,8 +41,12 @@ const MoreButton = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleDelete}>Not Interested</MenuItem>
-        <MenuItem onClick={handleDelete}>Harmful or Spam</MenuItem>
+        {item?.user.id === auth?.user.id ? (
+          <MenuItem onClick={handleDelete}>Delete Tweet</MenuItem>
+        ) : (
+          <MenuItem onClick={handleDelete}>Not Interested</MenuItem>
+        )}
+        {item?.user.id !== auth?.user.id && <MenuItem onClick={handleDelete}>Harmful or Spam</MenuItem>}
       </Menu>
     </div>
   );

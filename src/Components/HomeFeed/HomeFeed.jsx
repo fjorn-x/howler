@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import {Avatar, Button, CircularProgress, TextField, styled} from "@mui/material";
+import {Avatar, Button, CircularProgress, IconButton, TextField, styled} from "@mui/material";
 import {useFormik} from "formik";
-import React, {useEffect, useState} from "react";
+import React, {createRef, useEffect, useState} from "react";
 import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";
 
@@ -47,8 +47,10 @@ validationSchema.test("atLeastOneField", null, function (values) {
 });
 
 const HomeFeed = () => {
+  const inputRef = createRef();
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const [showEmojis, setShowEmojis] = useState(false);
   const dispatch = useDispatch();
   const {howl, auth} = useSelector((store) => store);
   const handleSubmit = (values, actions) => {
@@ -127,8 +129,10 @@ const HomeFeed = () => {
                     <ImageIcon className="text-[#b91c1c]" />
                     <input type="file" name="imageFile" className="hidden" onChange={handleSelectImage} />
                   </label>
-                  <FmdGoodIcon className="text-[#b91c1c]" />
-                  <TagFacesIcon className="text-[#b91c1c]" />
+                  <FmdGoodIcon className="text-[#b91c1c] cursor-pointer" />
+                  <IconButton className="cursor-pointer">
+                    <TagFacesIcon className="text-[#b91c1c]" />
+                  </IconButton>
                 </div>
 
                 <div>

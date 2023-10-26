@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import {useFormik} from "formik";
 import {Avatar, CircularProgress, IconButton, TextField} from "@mui/material";
-
+import * as Yup from "yup";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {useDispatch, useSelector} from "react-redux";
@@ -49,6 +49,10 @@ export default function ProfileModal() {
     setOpen(false);
   };
 
+  const validationSchema = Yup.object().shape({
+    website: Yup.string().matches(/^(https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}(\.[a-zA-Z]{2,})+(\/[a-zA-Z0-9]+)*$/, "Enter a valid website"),
+  });
+
   const formik = useFormik({
     initialValues: {
       fullName: auth?.user.fullName,
@@ -60,6 +64,7 @@ export default function ProfileModal() {
       profession: auth?.user.profession,
     },
     onSubmit: handleSubmit,
+    validationSchema,
   });
 
   const handleImageChange = async (event) => {
