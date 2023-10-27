@@ -104,7 +104,6 @@ const SignupModal = () => {
       values.birthDate = birthDate;
       // const date=new Date().setFullYear(year,month,day);
       dispatch(registerUser(values));
-      console.log("Signup values : ", values);
     },
   });
 

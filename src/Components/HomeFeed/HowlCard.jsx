@@ -36,7 +36,6 @@ const HowlCard = ({item, isRetweet = false}) => {
 
   const handleCopyLink = (text, result) => {
     setCopy(true);
-    console.log(`${text},${result}`);
   };
 
   const handleClose = (event, reason) => {

@@ -21,7 +21,6 @@ export const registerUser = createAsyncThunk("auth/register", async (registerDat
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
-    console.log("register user : ", data);
 
     return data.jwt;
   } catch (error) {
@@ -40,7 +39,6 @@ export const loginUser = createAsyncThunk("auth/login", async (loginData, {rejec
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
-    console.log("login user : ", data);
 
     return data.jwt;
   } catch (error) {
@@ -57,11 +55,9 @@ export const getUserProfile = createAsyncThunk("auth/getProfile", async (jwt, {r
     const {data} = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {Authorization: `Bearer ${jwt}`},
     });
-    console.log("get user profile", data);
 
     return data;
   } catch (error) {
-    console.log(error);
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
     } else {
@@ -78,10 +74,8 @@ export const getUserById = createAsyncThunk("auth/getUserById", async (userId, {
         "Content-Type": "application/json",
       },
     });
-    console.log("get user by id :", data);
     return data;
   } catch (error) {
-    console.log(error);
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
     } else {
@@ -96,10 +90,8 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (updateData,
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log("update user : ", data);
     return data;
   } catch (error) {
-    console.log(error);
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
     } else {
@@ -115,10 +107,8 @@ export const followUser = createAsyncThunk("auth/followUser", async (userId, {re
         "Content-Type": "application/json",
       },
     });
-    console.log("follow user : ", data);
     return data;
   } catch (error) {
-    console.log(error);
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
     } else {
@@ -155,7 +145,6 @@ export const googleLogin = createAsyncThunk("auth/register", async (jwt, {reject
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
     }
-    console.log("google login user : ", data);
 
     return data.jwt;
   } catch (error) {

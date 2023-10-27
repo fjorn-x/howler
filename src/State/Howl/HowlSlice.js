@@ -10,7 +10,6 @@ export const createHowl = createAsyncThunk("howl/create", async (howlData, {reje
         "Content-Type": "application/json",
       },
     });
-    console.log("create howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -29,10 +28,8 @@ export const deleteHowl = createAsyncThunk("howl/delete", async (howlId, {reject
         "Content-Type": "application/json",
       },
     });
-    console.log("delete tweet", data);
     return howlId;
   } catch (error) {
-    console.log("delete tweet", error);
 
     if (error.response && error.response.data.message) {
       return rejectWithValue(error.response.data.message);
@@ -48,10 +45,8 @@ export const getAllHowls = createAsyncThunk("api/getAllHowls", async (nullData, 
     const {data} = await axios.get(`${API_BASE_URL}/api/howls/all`, {
       headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
     });
-    console.log("get all howls: ", data);
     return data;
   } catch (error) {
-    console.log(error.message);
     if (error.response && error.response.data.message) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     } else {
@@ -65,10 +60,8 @@ export const getAllReplyHowls = createAsyncThunk("api/getAllReplyHowls", async (
     const {data} = await axios.get(`${API_BASE_URL}/api/howls/reply/howls`, {
       headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
     });
-    console.log("get all reply howls: ", data);
     return data;
   } catch (error) {
-    console.log(error.message);
     if (error.response && error.response.data.message) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     } else {
@@ -85,7 +78,6 @@ export const getUserHowls = createAsyncThunk("api/getUserHowls", async (userId, 
         "Content-Type": "application/json",
       },
     });
-    console.log("get user howls: ", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -104,7 +96,6 @@ export const getUserLikeHowls = createAsyncThunk("api/getUserLikeHowls", async (
         "Content-Type": "application/json",
       },
     });
-    console.log("get user like howls:", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -122,7 +113,6 @@ export const likeHowl = createAsyncThunk("api/likeHowl", async (howlId, {rejectW
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log("like howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -141,7 +131,6 @@ export const findHowlById = createAsyncThunk("api/findHowlById", async (howlId, 
         "Content-Type": "application/json",
       },
     });
-    console.log("find howl by id: ", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -159,7 +148,6 @@ export const replyHowl = createAsyncThunk("api/replyHowl", async (howlData, {rej
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
-    console.log("reply howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {
@@ -178,7 +166,6 @@ export const retweet = createAsyncThunk("api/retweet", async (howlId, {rejectWit
         "Content-Type": "application/json",
       },
     });
-    console.log("retweet howl :", data);
     return data;
   } catch (error) {
     if (error.response && error.response.data.message) {

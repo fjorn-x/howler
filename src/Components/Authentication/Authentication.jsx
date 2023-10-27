@@ -63,7 +63,7 @@ const Authentication = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(registerUser(values));
-      console.log("LoginValues : ", values);
+
     },
   });
 
@@ -90,14 +90,12 @@ const Authentication = () => {
 
                     formik.setFieldValue("fullName", name);
                     formik.setFieldValue("email", email);
-                    console.log(name);
+               
                     handleOpen();
-                    console.log(email);
+                 
 
-                    console.log(credentialResponse);
                   }}
                   onError={() => {
-                    console.log("Login Failed");
                   }}
                   size="large"
                   type="icon"

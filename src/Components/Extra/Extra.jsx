@@ -7,7 +7,6 @@ import SubscriptionModal from "./SubsciptionModal";
 
 const Extra = () => {
   const handleChangeTheme = () => {
-    console.log("change theme");
   };
   return (
     <div className="py-2 sticky top-0">

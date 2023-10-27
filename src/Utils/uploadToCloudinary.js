@@ -9,9 +9,6 @@ export const uploadToCloudinary = async (images) => {
       body: data,
     });
     const fileData = await res.json();
-    console.log(fileData);
     return fileData.url.toString();
-  } else {
-    console.log("error from upload function");
-  }
+  } 
 };

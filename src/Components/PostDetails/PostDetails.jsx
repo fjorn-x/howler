@@ -13,7 +13,6 @@ const PostDetails = () => {
   const dispatch = useDispatch();
   const id = useParams().postId;
   const {howl} = useSelector((store) => store);
-  console.log(JSON.stringify(id));
   useEffect(() => {
     if (id) {
       dispatch(findHowlById(id));

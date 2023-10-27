@@ -58,12 +58,10 @@ export default function SubscriptionModal() {
     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
 
     if (!res) {
-      console.log("Razorpay client failed to load");
       return;
     }
 
     const order = await axios.get(`${API_BASE_URL}/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
-    console.log(order);
 
     const options = {
       key: "rzp_test_C6MyjQb5ed2Jvz",
@@ -73,7 +71,6 @@ export default function SubscriptionModal() {
       description: "Howler Pro",
       order_id: order.id,
       handler: function (response) {
-        console.log(response.razorpay_payment_id);
       },
       prefill: {
         name: item?.user.fullName,

@@ -60,7 +60,6 @@ const LoginModal = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      console.log("LoginValues : ", values);
     },
   });
 
@@ -100,10 +99,8 @@ const LoginModal = () => {
                     const {email} = jwtDecode(credentialResponse.credential);
                     handleGoogleLogin();
                     formik.setFieldValue("email", email);
-                    console.log(credentialResponse);
                   }}
                   onError={() => {
-                    console.log("Login Failed");
                   }}
                   size="large"
                   type="icon"

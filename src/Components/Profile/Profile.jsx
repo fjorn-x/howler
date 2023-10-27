@@ -27,14 +27,11 @@ const Profile = () => {
 
   const handleFollowUser = () => {
     dispatch(followUser(userId));
-    console.log("follow user");
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const flag = userId == auth.user.id;
-  console.log("flag", flag);
   useEffect(() => {
     dispatch(getUserById(userId));
     dispatch(getAllHowls());
