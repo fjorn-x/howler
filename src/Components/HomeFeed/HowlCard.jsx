@@ -12,6 +12,7 @@ import ReplyModal from "./ReplyModal";
 import {useDispatch, useSelector} from "react-redux";
 import {likeHowl, retweet} from "../../State/Howl/HowlSlice";
 import CopyToClipboard from "react-copy-to-clipboard";
+import {FRONTEND_URL} from "../../config/api";
 
 const HowlCard = ({item, isRetweet = false}) => {
   const [copy, setCopy] = React.useState(false);
@@ -21,7 +22,7 @@ const HowlCard = ({item, isRetweet = false}) => {
 
   let differenceInSeconds = (new Date().getTime() - new Date(item?.createdAt?.replace("T", " ").substring(0, 19)).getTime()) / 1000;
 
-  const linkToCopy = `http://localhost:${process.env.PORT || "3000"}/${item?.user?.id}/post/${item?.id}`;
+  const linkToCopy = `${FRONTEND_URL}/${item?.user?.id}/post/${item?.id}`;
 
   (function formatTimestamp() {
     if (Math.round(differenceInSeconds) > 3600 && Math.round(differenceInSeconds) < 86400) {

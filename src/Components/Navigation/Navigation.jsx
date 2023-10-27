@@ -94,22 +94,7 @@ const Navigation = () => {
         </div>
 
         <div className="mt-3">
-          {/* <Button
-            sx={{
-              width: "90%",
-              borderRadius: "29px",
-              py: "15px",
-              fontWeight: "bold",
-              bgcolor: "#b91c1c",
-              "&:hover": {
-                backgroundColor: "black",
-              },
-            }}
-            variant="contained"
-          >
-            HOWL
-          </Button> */}
-          <HowlFromNav/>
+          <HowlFromNav />
         </div>
       </div>
       <div className=" mt-5 mb-5">
