@@ -17,32 +17,32 @@ export const navigation = [
   {
     title: "Explore",
     icon: <ExploreIcon />,
-    path: "/explore",
+    // path: "/explore",
   },
   {
     title: "Notifications",
     icon: <NotificationsIcon />,
-    path: "/notifications",
+    // path: "/notifications",
   },
   {
     title: "Messages",
     icon: <MessageIcon />,
-    path: "/messages",
+    // path: "/messages",
   },
   {
     title: "Lists",
     icon: <ListAltIcon />,
-    path: "/list",
+    // path: "/list",
   },
   {
     title: "Communities",
     icon: <GroupIcon />,
-    path: "/communities",
+    // path: "/communities",
   },
   {
     title: "Verified",
     icon: <VerifiedIcon />,
-    path: "/verified",
+    // path: "/verified",
   },
   {
     title: "Profile",
@@ -52,6 +52,6 @@ export const navigation = [
   {
     title: "More",
     icon: <PendingIcon />,
-    path: "/more",
+    // path: "/more",
   },
 ];
