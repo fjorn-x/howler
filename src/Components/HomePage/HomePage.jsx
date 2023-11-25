@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div>
       <Grid container className="px-5 md:px-20 justify-between overscroll-none">
-        <Grid item xs={0} lg={2.5} className="pl-6 xl:block w-full relative">
+        <Grid item xs={0} lg={2.5} className="pl-6 hidden xl:block w-full relative">
           <Navigation />
         </Grid>
         <Grid item xs={12} lg={6} className="pr-3 hidden lg:block w-full relative">
