@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import {API_BASE_URL} from "../../config/api";
+
 
 const initialState = {
   user: null,
@@ -16,7 +16,8 @@ const initialState = {
 
 export const registerUser = createAsyncThunk("auth/register", async (registerData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`${API_BASE_URL}/auth/signup`, registerData);
+   
+    const {data} = await axios.post('http://13.232.96.74:8080/auth/signup', registerData);
 
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
@@ -34,7 +35,7 @@ export const registerUser = createAsyncThunk("auth/register", async (registerDat
 
 export const loginUser = createAsyncThunk("auth/login", async (loginData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`${API_BASE_URL}/auth/login`, loginData);
+    const {data} = await axios.post(`http://13.232.96.74:8080/auth/login`, loginData);
 
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
@@ -52,9 +53,10 @@ export const loginUser = createAsyncThunk("auth/login", async (loginData, {rejec
 
 export const getUserProfile = createAsyncThunk("auth/getProfile", async (jwt, {rejectWithValue}) => {
   try {
-    const {data} = await axios.get(`${API_BASE_URL}/api/users/profile`, {
+    const {data} = await axios.get(`http://13.232.96.74:8080/api/users/profile`, {
       headers: {Authorization: `Bearer ${jwt}`},
     });
+
 
     return data;
   } catch (error) {
@@ -68,7 +70,7 @@ export const getUserProfile = createAsyncThunk("auth/getProfile", async (jwt, {r
 
 export const getUserById = createAsyncThunk("auth/getUserById", async (userId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.get(`${API_BASE_URL}/api/users/${userId}`, {
+    const {data} = await axios.get(`http://13.232.96.74:8080/api/users/${userId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -85,7 +87,7 @@ export const getUserById = createAsyncThunk("auth/getUserById", async (userId, {
 });
 export const updateUser = createAsyncThunk("auth/updateUser", async (updateData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.put(`${API_BASE_URL}/api/users/update`, updateData, {
+    const {data} = await axios.put(`http://13.232.96.74:8080/api/users/update`, updateData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
@@ -101,7 +103,7 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (updateData,
 });
 export const followUser = createAsyncThunk("auth/followUser", async (userId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.put(`${API_BASE_URL}/api/users/${userId}/follow`, "", {
+    const {data} = await axios.put(`http://13.232.96.74:8080/api/users/${userId}/follow`, "", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -119,7 +121,7 @@ export const followUser = createAsyncThunk("auth/followUser", async (userId, {re
 
 export const changePassword = createAsyncThunk("auth/changePassword", async (passwordData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`${API_BASE_URL}/auth/change-password`, passwordData, {
+    const {data} = await axios.post(`http://13.232.96.74:8080/auth/change-password`, passwordData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -140,7 +142,7 @@ export const changePassword = createAsyncThunk("auth/changePassword", async (pas
 
 export const googleLogin = createAsyncThunk("auth/register", async (jwt, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`${API_BASE_URL}/auth/login/google`, jwt);
+    const {data} = await axios.post(`http://13.232.96.74:8080/auth/login/google`, jwt);
 
     if (data.jwt) {
       localStorage.setItem("jwt", data.jwt);
