@@ -61,7 +61,7 @@ export default function SubscriptionModal() {
       return;
     }
 
-    const order = await axios.get(`http://13.232.96.74:8080/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
+    const order = await axios.get(`https://13.201.80.219:8443/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
 
     const options = {
       key: "rzp_test_C6MyjQb5ed2Jvz",

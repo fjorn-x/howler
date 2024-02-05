@@ -1,3 +1,3 @@
-export const API_BASE_URL ="http://13.232.96.74:8080";
+export const API_BASE_URL ="https://13.201.80.219:8443";
 export const FRONTEND_URL ="https://howler-snowy.vercel.app/"; 
  
