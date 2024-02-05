@@ -1,12 +1,12 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Modal from "@mui/material/Modal";
 import {Avatar, IconButton, Button, styled, TextField, CircularProgress} from "@mui/material";
 
 import {Verified} from "@mui/icons-material";
-import CloseIcon from "@mui/icons-material/Close";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import ImageIcon from "@mui/icons-material/Image";

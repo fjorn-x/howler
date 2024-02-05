@@ -13,8 +13,6 @@ function App() {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [loading, setLoading] = React.useState(false);
-
   useEffect(() => {
     if (jwt) {
       dispatch(getUserProfile(jwt));

@@ -61,7 +61,7 @@ export default function SubscriptionModal() {
       return;
     }
 
-    const order = await axios.get(`https://13.201.80.219:8443/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
+    const order = await axios.get(`http://localhost:80/api/razorpay/create/order/${plan === "annually" ? 1000 : 100}`);
 
     const options = {
       key: "rzp_test_C6MyjQb5ed2Jvz",
@@ -70,8 +70,7 @@ export default function SubscriptionModal() {
       name: "Howler",
       description: "Howler Pro",
       order_id: order.id,
-      handler: function (response) {
-      },
+      handler: function (response) {},
       prefill: {
         name: item?.user.fullName,
         email: item?.user.fullName,
