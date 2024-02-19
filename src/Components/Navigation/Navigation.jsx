@@ -84,8 +84,8 @@ const Navigation = () => {
         <div className="space-y-2">
           {navigation.map((item) => (
             <div
-              className="hover:bg-gray-200 cursor-pointer flex space-x-3 items-center rounded-full p-3 "
-              onClick={() => (item.title === "Profile" ? navigate(`/profile/${auth?.user?.id}`) : navigate(item.path))}
+              className={`hover:bg-gray-200 ${item.title==="Profile"|| item.title=== "Home"?'cursor-pointer':'cursor-not-allowed'} flex space-x-3 items-center rounded-full p-3 `}
+              onClick={() => (item.title === "Profile"  ? navigate(`/profile/${auth?.user?.id}`) : navigate(item.path))}
             >
               {item.icon}
               <p className="text-xl">{item.title}</p>

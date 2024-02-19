@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const createHowl = createAsyncThunk("howl/create", async (howlData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`http://localhost:80/api/howls/create`, howlData, {
+    const {data} = await axios.post(`http://localhost:8443/api/howls/create`, howlData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const createHowl = createAsyncThunk("howl/create", async (howlData, {reje
 
 export const deleteHowl = createAsyncThunk("howl/delete", async (howlId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.delete(`http://localhost:80/api/howls/${howlId}`, {
+    const {data} = await axios.delete(`http://localhost:8443/api/howls/${howlId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const deleteHowl = createAsyncThunk("howl/delete", async (howlId, {reject
 export const getAllHowls = createAsyncThunk("api/getAllHowls", async (nullData, thunkAPI) => {
   try {
     // const {data} = await axios.get("/api/howls/");
-    const {data} = await axios.get(`http://localhost:80/api/howls/all`, {
+    const {data} = await axios.get(`http://localhost:8443/api/howls/all`, {
       headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
     });
     return data;
@@ -55,7 +55,7 @@ export const getAllHowls = createAsyncThunk("api/getAllHowls", async (nullData, 
 export const getAllReplyHowls = createAsyncThunk("api/getAllReplyHowls", async (nullData, thunkAPI) => {
   try {
     // const {data} = await axios.get("/api/howls/");
-    const {data} = await axios.get(`http://localhost:80/api/howls/reply/howls`, {
+    const {data} = await axios.get(`http://localhost:8443/api/howls/reply/howls`, {
       headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`},
     });
     return data;
@@ -70,7 +70,7 @@ export const getAllReplyHowls = createAsyncThunk("api/getAllReplyHowls", async (
 
 export const getUserHowls = createAsyncThunk("api/getUserHowls", async (userId, thunkAPI) => {
   try {
-    const {data} = await axios.get(`http://localhost:80/api/howls/user/${userId}`, {
+    const {data} = await axios.get(`http://localhost:8443/api/howls/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export const getUserHowls = createAsyncThunk("api/getUserHowls", async (userId, 
 
 export const getUserLikeHowls = createAsyncThunk("api/getUserLikeHowls", async (userId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.get(`http://localhost:80/api/howls/user/${userId}/likes`, {
+    const {data} = await axios.get(`http://localhost:8443/api/howls/user/${userId}/likes`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -106,7 +106,7 @@ export const getUserLikeHowls = createAsyncThunk("api/getUserLikeHowls", async (
 
 export const likeHowl = createAsyncThunk("api/likeHowl", async (howlId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`http://localhost:80/api/${howlId}/likes`, "", {
+    const {data} = await axios.post(`http://localhost:8443/api/${howlId}/likes`, "", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
@@ -123,7 +123,7 @@ export const likeHowl = createAsyncThunk("api/likeHowl", async (howlId, {rejectW
 
 export const findHowlById = createAsyncThunk("api/findHowlById", async (howlId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.get(`http://localhost:80/api/howls/${howlId}`, {
+    const {data} = await axios.get(`http://localhost:8443/api/howls/${howlId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
@@ -141,7 +141,7 @@ export const findHowlById = createAsyncThunk("api/findHowlById", async (howlId, 
 
 export const replyHowl = createAsyncThunk("api/replyHowl", async (howlData, {rejectWithValue}) => {
   try {
-    const {data} = await axios.post(`http://localhost:80/api/howls/reply`, howlData, {
+    const {data} = await axios.post(`http://localhost:8443/api/howls/reply`, howlData, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
@@ -158,7 +158,7 @@ export const replyHowl = createAsyncThunk("api/replyHowl", async (howlData, {rej
 
 export const retweet = createAsyncThunk("api/retweet", async (howlId, {rejectWithValue}) => {
   try {
-    const {data} = await axios.put(`http://localhost:80/api/howls/${howlId}/retweet`, "", {
+    const {data} = await axios.put(`http://localhost:8443/api/howls/${howlId}/retweet`, "", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         "Content-Type": "application/json",
